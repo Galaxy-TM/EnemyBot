@@ -1,0 +1,13 @@
+{
+    "mover": ["Mover", "Movers"],
+    "generator": ["Generator", "Generators"],
+    "push": ["Push", "Pushes"],
+    "slide": ["Slide", "Slides"],
+    "rotator": ["Rotator", "Rotators"],
+    "rotator_ccw": ["Extra Rotator", "Extra Rotators"],
+    "trash": ["Trash", "Trashes"],
+
+    "enemy": ["Enemy", "Enemies"],
+
+    "arrow_shooter": ["Arrow Shooter", "Arrow Shooters"]
+}
