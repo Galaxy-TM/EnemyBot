@@ -84,7 +84,7 @@ const commands = {
         cooldown: 1000,
         aliases: ["help", "h"],
         func: message => {
-            message.channel.send(new DISCORD.MessageEmbed()
+            message.channel.send(new Discord.MessageEmbed()
                 .setTitle("Help")
                 .addField(Object.keys(commands))
             );
