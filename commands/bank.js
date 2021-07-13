@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
-const order = Object.keys(NAMES);
+const order = ["mover", "generator", "push", "slide", "rotator", "rotator_ccw", "trash", "enemy"];
 
 module.exports = (message, _c, [id], inventories, prefix) => {
     let name;
