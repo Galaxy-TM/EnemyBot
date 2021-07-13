@@ -31,7 +31,7 @@ db.get("cd").then(cd => {
 
 
 function toTime(ms = 0) {
-    let fSeconds = Math.round(ms / 10) / 100 % 1;
+    let fSeconds = Math.round(ms / 10) / 100;
     let seconds = Math.floor(ms / 1000) % 60;
     let minutes = Math.floor(ms / 60000) % 60;
     let hours = Math.floor(ms / 3600000) % 24;
@@ -91,7 +91,7 @@ const commands = {
                 .setTitle("Help")
                 .addFields(Object.entries(commands).map(([cmdName, {cooldown, aliases, perms}]) => ({
                     name: cmdName,
-                    value: `Cooldown: ${toTime(cooldown)}\nAliases: ${aliases.join(", ")}\nPerms: ${perms}`
+                    value: `**Cooldown**: ${toTime(cooldown)}\n**Aliases**: ${aliases.join(", ")}\n**Perms**: ${perms}`
                 })))
             );
         },
