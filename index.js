@@ -94,6 +94,7 @@ const commands = {
                 .addFields(Object.entries(commands).map(([cmdName, {cooldown, aliases, perms}]) => ({
                     name: cmdName + ((perms === "ADMIN" && ADMINID.includes(message.author.id)) ? " (ADMIN)" : ""),
                     value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}`,
+                    inline: true,
                     perms
                 })).filter(({perms}) => perms === "NORMAL" || ADMINID.includes(message.author.id)))
             )
