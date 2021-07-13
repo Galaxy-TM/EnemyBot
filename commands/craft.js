@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 
+/** @typedef {Object<string, number>} Recipe */
+/** @type {Object<string, Recipe>} */
 const RECIPES = {
     arrow_shooter: {
         mover: 1,
@@ -36,11 +38,12 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
         return;
     }
     if (args[0] in RECIPES) {
+        const RECIPE = RECIPES[args[0]];
         const str = [];
         const inv = inventories[message.author.id];
         let canCraft = true;
-        for (let component in RECIPES[args[0]]) {
-            const required = RECIPES[args[0]][component];
+        for (let component in RECIPE) {
+            const required = RECIPE[component];
             if (component in inv) {
                 const has = inv[component];
                 str.push(`${has >= required ? "✅" : "❌"} ${has}/${required} ${NAMES[component][1 - (required === 1)]}`);
@@ -74,15 +77,20 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
             ).then(collected => {
                 let reaction = collected.first();
                 if (reaction.emoji.name === "✅") {
+                    for (let item in RECIPE) {
+                        inv[item] -= RECIPE[item];
+                    }
+                    if (!(args[0] in inv)) inv[args[0]] = 0;
+                    inv[args[0]]++;
                     confirmMsg.edit(new Discord.MessageEmbed()
                         .setTitle(`Crafted ${ARTICLE} ${NAME} ${EMOJI}`)
                         .setColor("#E82727")
-                    )
+                    );
                 } else {
                     confirmMsg.edit(new Discord.MessageEmbed()
                         .setTitle("Cancelled crafting.")
                         .setColor("#E82727")
-                    )
+                    );
                 }
             }).catch(console.error);
         });
