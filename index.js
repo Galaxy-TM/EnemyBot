@@ -152,6 +152,7 @@ client.on("message", message => {
                 if (set) cooldowns = set;
                 db.set("cd", cooldowns);
             });
+            db.set("cd", cooldowns);
         }
     }
 });
