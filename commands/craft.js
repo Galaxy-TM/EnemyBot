@@ -18,7 +18,7 @@ const RECIPES = {
     }
 };
 
-module.exports = (message, _c, args, inventories, setInv) => {
+module.exports = (message, _c, args, inventories, prefix, setInv) => {
     if (!(message.author.id in inventories)) {
         message.channel.send("Since you don't have an inventory, I won't bother evaluating.");
         return;

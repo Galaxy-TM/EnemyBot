@@ -1,7 +1,7 @@
 const EMOJIS = require("../lib/emojis");
 const Discord = require("discord.js");
 
-module.exports = (message, _c, _a, inventories, setInv, setCD) => {
+module.exports = (message, _c, _a, _i, _p, setInv, setCD) => {
     message.channel.send(new Discord.MessageEmbed()
         .setAuthor("⚠️ DANGER")
         .setTitle("Are you sure you want to reset inventories and cooldowns?")

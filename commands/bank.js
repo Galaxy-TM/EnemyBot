@@ -3,7 +3,7 @@ const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 const order = Object.keys(NAMES);
 
-module.exports = (message, _c, [id], inventories) => {
+module.exports = (message, _c, [id], inventories, prefix) => {
     let name;
     let avatar;
     if (!id) {
@@ -51,7 +51,7 @@ module.exports = (message, _c, [id], inventories) => {
     } else {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`${name || id}'s Bank is empty!`)
-            .setFooter("Use `-hunt` to get cells!")
+            .setFooter(`Use \`${prefix}hunt\` to get cells!`)
             .setColor("#E82727")
         );
     }

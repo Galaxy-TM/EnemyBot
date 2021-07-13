@@ -45,7 +45,7 @@ function toTime(ms = 0) {
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
 
-/** @typedef {{ cooldown: number, aliases: string[], func: (message: Discord.Message, commandName: string, args: string[], inventories: InvsLike, setInv: (inv?: InvsLike) => void, setCD: (cd?: InvLike) => void) => void, perms: "NORMAL" | "ADMIN" }} Command */
+/** @typedef {{ cooldown: number, aliases: string[], func: (message: Discord.Message, commandName: string, args: string[], inventories: InvsLike, prefix: string, setInv: (inv?: InvsLike) => void, setCD: (cd?: InvLike) => void) => void, perms: "NORMAL" | "ADMIN" }} Command */
 /** @type {Object<string, Command>} */
 const commands = {
     hunt: {
@@ -142,7 +142,7 @@ client.on("message", message => {
             );
         } else {
             cooldowns[message.author.id][c] = Date.now();
-            command.func(message, commandName, args, inventories, set => {
+            command.func(message, commandName, args, inventories, prefix, set => {
                 if (set) inventories = set;
                 db.set("inv", inventories);
             }, set => {
@@ -155,7 +155,7 @@ client.on("message", message => {
 
 
 client.login(process.env.TOKEN).then(() => {
-    client.user.setActivity("Channel " + CHANNELID, { type: "LISTENING" });
+    client.user.setActivity(`for ${prefix}help  `, { type: "LISTENING" });
 }).catch(console.error);
 
 "";

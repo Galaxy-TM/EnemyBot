@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 
-module.exports = (message, _c, [id, item = "push", count = 1], inventories, setInv) => {
+module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, setInv) => {
     if (!(item in NAMES)) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`**${item}** isn't in \`NAMES\`.`)
@@ -63,4 +63,6 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, setI
         .setTitle(`${name || id} has been given **${count} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}** and now has **${inv[item]} ${NAMES[item][inv[item] === 1 ? 0 : 1]} ${EMOJIS[item]}**`)
         .setColor("#E82727")
     );
+
+    setInv();
 };
