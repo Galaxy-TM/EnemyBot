@@ -10,5 +10,6 @@
 
     "arrow_shooter": ["Arrow Shooter", "Arrow Shooters", "an"],
     "mover_gear": ["Mover Gear", "Mover Gears", "a"],
-    "enemy_vault": ["Enemy Vault", "Enemy Vaults", "an"]
+    "enemy_vault": ["Enemy Vault", "Enemy Vaults", "an"],
+    "counter": ["Counter", "Counters", "a"]
 }

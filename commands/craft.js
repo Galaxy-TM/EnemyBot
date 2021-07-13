@@ -17,6 +17,11 @@ const RECIPES = {
     enemy_vault: {
         slide: 4,
         generator: 1
+    },
+    counter: {
+        generator: 1,
+        push: 2,
+        trash: 1
     }
 };
 
