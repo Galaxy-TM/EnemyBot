@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Discord = require("discord.js");  
 const client = new Discord.Client();
-const prefix = "-";
+const prefix = "INSERTVERYRANDOMPREFIX";
 const EMOJIS = require("./lib/emojis");
 const ADMINID = ["702757890460745810", "520293520418930690"];
 
@@ -156,7 +156,7 @@ client.on("message", message => {
 
 
 client.login(process.env.TOKEN).then(() => {
-    client.user.setActivity(`for ${prefix}help  `, { type: "LISTENING" });
+    client.user.setActivity(`${prefix}hunt  `, { type: "PLAYING" });
 }).catch(console.error);
 
 "";
