@@ -54,12 +54,6 @@ const commands = {
         func: require("./commands/hunt"),
         perms: "NORMAL"
     },
-    reset: {
-        cooldown: 0,
-        aliases: ["reset"],
-        func: require("./commands/reset"),
-        perms: "ADMIN"
-    },
     bank: {
         cooldown: 1000,
         aliases: ["bank", "b", "inv", "i"],
@@ -78,12 +72,6 @@ const commands = {
         func: require("./commands/craft"),
         perms: "NORMAL"
     },
-    give: {
-        cooldown: 1000,
-        aliases: ["give"],
-        func: require("./commands/give"),
-        perms: "ADMIN"
-    },
     help: {
         cooldown: 1000,
         aliases: ["help"],
@@ -100,6 +88,18 @@ const commands = {
             )
         },
         perms: "NORMAL"
+    },
+    give: {
+        cooldown: 1000,
+        aliases: ["give"],
+        func: require("./commands/give"),
+        perms: "ADMIN"
+    },
+    reset: {
+        cooldown: 0,
+        aliases: ["reset"],
+        func: require("./commands/reset"),
+        perms: "ADMIN"
     }
 };
 
