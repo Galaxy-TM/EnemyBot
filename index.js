@@ -85,7 +85,8 @@ const commands = {
         aliases: ["help", "h"],
         func: message => {
             message.channel.send(new DISCORD.MessageEmbed()
-                .setTitle
+                .setTitle("Help")
+                .addField(Object.keys(commands))
             );
         },
         perms: "NORMAL"
