@@ -94,10 +94,8 @@ const commands = {
                     name: cmdName,
                     value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}`,
                     perms
-                })).filter(({perms}) => {
-                    perms === "NORMAL" || ADMINID.includes(message.author.id)
-                }))
-            );
+                })).filter(({perms}) => (perms === "NORMAL") || ADMINID.includes(message.author.id)))
+            )
         },
         perms: "NORMAL"
     }
