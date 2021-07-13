@@ -45,7 +45,8 @@ function toTime(ms = 0) {
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
 
-/** @type {Object<string, { cooldown: number, aliases: string[], func: (message: Discord.Message, commandName: string, args: string[], inventories: InvsLike, setInv: (inv?: InvsLike) => void, setCD: (cd?: InvLike) => void) => void }>} */
+/** @typedef {{ cooldown: number, aliases: string[], func: (message: Discord.Message, commandName: string, args: string[], inventories: InvsLike, setInv: (inv?: InvsLike) => void, setCD: (cd?: InvLike) => void) => void, perms: "NORMAL" | "ADMIN" }} Command */
+/** @type {Object<string, Command>} */
 const commands = {
     hunt: {
         cooldown: 60 * 60 * 1000,
@@ -91,8 +92,11 @@ const commands = {
                 .setTitle("Help")
                 .addFields(Object.entries(commands).map(([cmdName, {cooldown, aliases, perms}]) => ({
                     name: cmdName,
-                    value: `**Cooldown**: ${toTime(cooldown)}\n**Aliases**: ${aliases.join(", ")}\n**Perms**: ${perms}`
-                })))
+                    value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}`,
+                    perms
+                })).filter(({perms}) => {
+                    perms === "NORMAL" || ADMINID.includes(message.author.id)
+                }))
             );
         },
         perms: "NORMAL"
