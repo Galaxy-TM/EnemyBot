@@ -136,7 +136,6 @@ client.on("message", message => {
         }
 
         const cdTime = cooldowns[message.author.id][c] + command.cooldown - Date.now();
-        console.log(cdTime);
 
         if (cdTime > 0) {
             message.channel.send(new Discord.MessageEmbed()
