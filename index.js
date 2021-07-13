@@ -1,7 +1,8 @@
 require("dotenv").config();
 const Discord = require("discord.js");  
 const client = new Discord.Client();
-const prefix = "INSERTVERYRANDOMPREFIX";
+const prefix = "-";
+
 const EMOJIS = require("./lib/emojis");
 const ADMINID = ["702757890460745810", "520293520418930690"];
 
@@ -67,7 +68,7 @@ const commands = {
         perms: "NORMAL"
     },
     craft: {
-        cooldown: 10 * 1000,
+        cooldown: 5 * 1000,
         aliases: ["craft", "c"],
         func: require("./commands/craft"),
         perms: "NORMAL"
@@ -135,6 +136,7 @@ client.on("message", message => {
         }
 
         const cdTime = cooldowns[message.author.id][c] + command.cooldown - Date.now();
+        console.log(cdTime);
 
         if (cdTime > 0) {
             message.channel.send(new Discord.MessageEmbed()

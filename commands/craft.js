@@ -65,7 +65,7 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
             .setDescription(str.join("\n"))
             .setFooter(canCraft
                 ? `React with ✅ to confirm crafting, react with ❌ to cancel crafting.`
-                : "Tip: use `-hunt` to hunt every hour and `-daily` to claim your daily crate"
+                : `Tip: use ${prefix}hunt to hunt every hour and ${prefix}daily to claim your daily crate`
             )
         ).then(confirmMsg => {
             if (canCraft) {
@@ -86,6 +86,7 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
                         .setTitle(`Crafted ${ARTICLE} ${NAME} ${EMOJI}`)
                         .setColor("#E82727")
                     );
+                    setInv();
                 } else {
                     confirmMsg.edit(new Discord.MessageEmbed()
                         .setTitle("Cancelled crafting.")
