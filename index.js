@@ -90,6 +90,7 @@ const commands = {
         func: message => {
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle("Help")
+                .setColor("#E82727")
                 .addFields(Object.entries(commands).map(([cmdName, {cooldown, aliases, perms}]) => ({
                     name: cmdName + ((perms === "ADMIN" && ADMINID.includes(message.author.id)) ? " (ADMIN)" : ""),
                     value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}`,
