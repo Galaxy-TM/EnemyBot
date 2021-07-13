@@ -5,5 +5,6 @@
     "slide": 0.765,
     "push": 0.885,
     "rotator_ccw": 0.965,
-    "trash": 1
+    "trash": 0.999,
+    "enemy": 1
 }

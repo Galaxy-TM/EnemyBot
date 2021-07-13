@@ -2,6 +2,8 @@ require("dotenv").config();
 const Discord = require("discord.js");  
 const client = new Discord.Client();
 const prefix = "-";
+const EMOJIS = require("./lib/emojis");
+const ADMINID = ["702757890460745810", "520293520418930690"];
 
 // Inv
 const db = new (require("@replit/database"))();
@@ -42,11 +44,52 @@ function toTime(ms) {
 
 
 const commands = {
-    hunt: require("./commands/hunt"),
-    reset: require("./commands/reset"),
-    bank: require("./commands/inv"),
-    daily: require("./commands/daily"),
-    craft: require("./commands/craft")
+    hunt: {
+        cooldown: 60 * 60 * 1000,
+        aliases: ["hunt", "h"],
+        func: require("./commands/hunt"),
+        perms: "NORMAL"
+    },
+    reset: {
+        cooldown: 0,
+        aliases: ["reset"],
+        func: require("./commands/reset"),
+        perms: "ADMIN"
+    },
+    bank: {
+        cooldown: 1000,
+        aliases: ["bank", "b", "inv", "i"],
+        func: require("./commands/bank"),
+        perms: "NORMAL"
+    },
+    daily: {
+        cooldown: 23 * 60 * 60 * 1000 + 40 * 60 * 1000,
+        aliases: ["daily", "d"],
+        func: require("./commands/daily"),
+        perms: "NORMAL"
+    },
+    craft: {
+        cooldown: 10 * 1000,
+        aliases: ["craft", "c"],
+        func: require("./commands/craft"),
+        perms: "NORMAL"
+    },
+    give: {
+        cooldown: 1000,
+        aliases: ["give"],
+        func: require("./commands/give"),
+        perms: "ADMIN"
+    },
+    help: {
+        cooldown: 1000,
+        aliases: ["help", "h"],
+        func: message => {
+            message.channel.send(new DISCORD.MessageEmbed()
+                .setTitle
+            );
+        },
+        perms: "NORMAL"
+    }
 };
 
 // discord bot stuff
@@ -65,29 +108,37 @@ client.on("message", message => {
     if (!message.content.startsWith(prefix)) return;
     if (message.author.bot) return;
 
-    const [command, ...args] = message.content.slice(prefix.length).split(/ +/g);
+    const [commandName, ...args] = message.content.slice(prefix.length).split(/ +/g);
+    for (let c in commands) {
+        const command = commands[c];
+        if (!command.aliases.includes(commandName)) continue;
 
-    if (command in commands) {
-        if (!(message.author.id in cooldowns)) {
-            cooldowns[message.author.id] = {};
+        if (command.perms === "ADMIN" && !ADMINID.includes(message.author.id)) {
+            message.channel.send(new Discord.MessageEmbed()
+                .setTitle(`You don't have the permissions to do that ${EMOJIS.enemy}`)
+                .setColor("#E82727")
+            );
+            return;
+        } else if (command.perms === "NORMAL") {
+
         }
-        if ((cooldowns[message.author.id][command] || 0) + commands[command].cooldown < Date.now()) {
-            cooldowns[message.author.id][command] = Date.now();
-            db.set("cd", cooldowns);
 
-            commands[command].func(message, command, args, inventories, set => {
+        const cdTime = cooldowns[message.author.id][c] + command.cooldown - Date.now();
+
+        if (cdTime > 0) {
+            message.channel.send(new Discord.MessageEmbed()
+                .setTitle(`Sorry! This command can be used again in **${toTime(cdTime)}**`)
+                .setColor("#E82727")
+            );
+        } else {
+            cooldowns[message.author.id][c] = Date.now();
+            command.func(message, commandName, args, inventories, set => {
                 if (set) inventories = set;
                 db.set("inv", inventories);
             }, set => {
                 if (set) cooldowns = set;
                 db.set("cd", cooldowns);
             });
-        } else {
-            message.channel.send(new Discord.MessageEmbed()
-                .setTitle("Cooldown!")
-                .setColor("#E82727")
-                .setDescription(`This command can be used again in ${toTime(commands[command].cooldown - (Date.now() - cooldowns[message.author.id][command]))}. Sorry!`)
-            );
         }
     }
 });

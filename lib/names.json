@@ -1,13 +1,14 @@
 {
-    "mover": ["Mover", "Movers"],
-    "generator": ["Generator", "Generators"],
-    "push": ["Push", "Pushes"],
-    "slide": ["Slide", "Slides"],
-    "rotator": ["Rotator", "Rotators"],
-    "rotator_ccw": ["Extra Rotator", "Extra Rotators"],
-    "trash": ["Trash", "Trashes"],
+    "mover": ["Mover", "Movers", "a"],
+    "generator": ["Generator", "Generators", "a"],
+    "push": ["Push", "Pushes", "a"],
+    "slide": ["Slide", "Slides", "a"],
+    "rotator": ["Rotator", "Rotators", "a"],
+    "rotator_ccw": ["Extra Rotator", "Extra Rotators", "an"],
+    "trash": ["Trash", "Trashes", "a"],
+    "enemy": ["Enemy", "Enemies", "an"],
 
-    "enemy": ["Enemy", "Enemies"],
-
-    "arrow_shooter": ["Arrow Shooter", "Arrow Shooters"]
+    "arrow_shooter": ["Arrow Shooter", "Arrow Shooters", "an"],
+    "mover_gear": ["Mover Gear", "Mover Gears", "a"],
+    "enemy_vault": ["Enemy Vault", "Enemy Vaults", "an"]
 }
