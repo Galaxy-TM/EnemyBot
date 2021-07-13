@@ -5,8 +5,10 @@ const prefix = "-";
 const EMOJIS = require("./lib/emojis");
 const ADMINID = ["702757890460745810", "520293520418930690"];
 
+/** @typedef {Object<string, Object<string, number>>} InvsLike */
 // Inv
 const db = new (require("@replit/database"))();
+/** @type {InvsLike} */
 let inventories = null;
 db.get("inv").then(inv => {
     if (inv) {
@@ -16,6 +18,7 @@ db.get("inv").then(inv => {
         db.set("inv", {});
     }
 });
+/** @type {InvsLike} */
 let cooldowns = null;
 db.get("cd").then(cd => {
     if (cd) {
@@ -27,7 +30,7 @@ db.get("cd").then(cd => {
 });
 
 
-function toTime(ms) {
+function toTime(ms = 0) {
     let fSeconds = Math.round(ms / 10) / 100 % 1;
     let seconds = Math.floor(ms / 1000) % 60;
     let minutes = Math.floor(ms / 60000) % 60;
@@ -42,7 +45,7 @@ function toTime(ms) {
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
 
-
+/** @type {Object<string, { cooldown: number, aliases: string[], func: (message: Discord.Message, commandName: string, args: string[], inventories: InvsLike, setInv: (inv?: InvsLike) => void, setCD: (cd?: InvLike) => void) => void }>} */
 const commands = {
     hunt: {
         cooldown: 60 * 60 * 1000,
@@ -82,11 +85,14 @@ const commands = {
     },
     help: {
         cooldown: 1000,
-        aliases: ["help", "h"],
+        aliases: ["help"],
         func: message => {
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle("Help")
-                .addField(Object.keys(commands))
+                .addFields(Object.entries(commands).map(([cmdName, {cooldown, aliases, perms}]) => ({
+                    name: cmdName,
+                    value: `Cooldown: ${toTime(cooldown)}\nAliases: ${aliases.join(", ")}\nPerms: ${perms}`
+                })))
             );
         },
         perms: "NORMAL"
