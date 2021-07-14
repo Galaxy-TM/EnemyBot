@@ -140,7 +140,11 @@ client.on("message", message => {
 
         }
 
-        const cdTime = cooldowns[message.author.id][c] + command.cooldown - Date.now();
+        if (!(message.author.id in cooldowns)) cooldowns[message.author.id] = {};
+
+        const cd = cooldowns[message.author.id];
+
+        const cdTime = (cd[c] || 0) + command.cooldown - Date.now();
 
         if (cdTime > 0) {
             message.channel.send(new Discord.MessageEmbed()
@@ -148,7 +152,7 @@ client.on("message", message => {
                 .setColor("#E82727")
             );
         } else {
-            cooldowns[message.author.id][c] = Date.now();
+            cd[c] = Date.now();
             command.func(message, commandName, args, inventories, prefix, set => {
                 if (set) inventories = set;
                 db.set("inv", inventories);
