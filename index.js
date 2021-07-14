@@ -6,10 +6,9 @@ const prefix = "-";
 const EMOJIS = require("./lib/emojis");
 const ADMINID = ["702757890460745810", "520293520418930690"];
 
-/** @typedef {Object<string, Object<string, number>>} InvsLike */
 // Inv
 const db = new (require("@replit/database"))();
-/** @type {InvsLike} */
+
 let inventories = null;
 db.get("inv").then(inv => {
     if (inv) {
@@ -19,7 +18,7 @@ db.get("inv").then(inv => {
         db.set("inv", {});
     }
 });
-/** @type {InvsLike} */
+
 let cooldowns = null;
 db.get("cd").then(cd => {
     if (cd) {
@@ -43,11 +42,11 @@ function toTime(ms = 0) {
     if (!hours) {
         return `${minutes} minute${minutes === 1 ? "" : "s"} and ${seconds} second${seconds === 1 ? "" : "s"}`;
     }
+    if (!minutes) {
+        return `${hours} hour${hours === 1 ? "" : "s"}`;
+    }
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
-
-/** @typedef {{ cooldown: number, aliases: string[], func: (message: Discord.Message, commandName: string, args: string[], inventories: InvsLike, prefix: string, setInv: (inv?: InvsLike) => void, setCD: (cd?: InvLike) => void) => void, perms: "NORMAL" | "ADMIN" }} Command */
-/** @type {Object<string, Command>} */
 const commands = {
     hunt: {
         cooldown: 60 * 60 * 1000,
