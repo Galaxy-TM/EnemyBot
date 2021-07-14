@@ -41,7 +41,7 @@ module.exports = (message, _c, [id], inventories, prefix) => {
     if (id in inventories) {
         const inv = inventories[id];
         message.channel.send(new Discord.MessageEmbed()
-            .setAuthor(`${name || id}'s Crafts (×${Object.entries(inv).reduce((a, [_craft, count]) => a + Number(count), 0)})`, avatar) 
+            .setAuthor(`${name || id}'s Crafts (×${order.map(craft => (craft in inv) ? inv[craft] : 0).reduce((a, count) => a + Number(count), 0)})`, avatar) 
             .setColor("#E82727")
             .setDescription(order.map(craft => {
                 if (!(craft in inv)) return false;
