@@ -17,7 +17,7 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
             .setColor("#E82727")
             .addFields(Object.entries(RECIPES).map(([name, recipe]) => ({
                 name: `${NAMES[name][0]} ${EMOJIS[name]}          \u200c`,
-                value: Object.entries(recipe).map(([cell, count]) => `**${count}** ${NAMES[cell][count === 1 ? 0 : 1]} ${EMOJIS[cell]}`).join("\n"),
+                value: Object.entries(recipe).map(([cell, count]) => `**${count}** ${EMOJIS[cell]}`).join("; "),
                 inline: true
             })))
         );
