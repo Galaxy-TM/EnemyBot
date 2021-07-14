@@ -41,7 +41,7 @@ module.exports = (message, _c, [id], inventories, prefix) => {
     if (id in inventories) {
         const inv = inventories[id];
         message.channel.send(new Discord.MessageEmbed()
-            .setAuthor(`${name || id}'s Bank (×${order.map(cell => inv[cell]).filter(n => n).reduce((a, count) => a + Number(count), 0)})`, avatar) 
+            .setAuthor(`${name || id}'s Bank (×${order.map(cell => inv[cell]).filter(n => n !== undefined).reduce((a, count) => a + Number(count), 0)})`, avatar) 
             .setColor("#E82727")
             .setDescription(order.map(cell => {
                 if (!(cell in inv)) return false;
