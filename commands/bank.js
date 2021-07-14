@@ -41,10 +41,10 @@ module.exports = (message, _c, [id], inventories, prefix) => {
     if (id in inventories) {
         const inv = inventories[id];
         message.channel.send(new Discord.MessageEmbed()
-            .setAuthor(`${name || id}'s Bank (×${order.map(cell => (cell in inv) ? inv[cell] : null).filter(n => n !== null).reduce((a, count) => a + Number(count), 0)})`, avatar) 
+            .setAuthor(`${name || id}'s Bank (×${order.map(cell => inv[cell]).reduce((a, count) => a + Number(count), 0)})`, avatar) 
             .setColor("#E82727")
             .setDescription(order.map(cell => {
-                if (!(cell in inv)) return false;
+                if (!inv[cell]) return false;
                 let count = inv[cell];
                 return `**${count}** ${NAMES[cell][count === 1 ? 0 : 1]} ${EMOJIS[cell]}`;
             }).filter(s => s).join("\n"))

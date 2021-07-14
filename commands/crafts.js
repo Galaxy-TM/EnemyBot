@@ -44,7 +44,7 @@ module.exports = (message, _c, [id], inventories, prefix) => {
             .setAuthor(`${name || id}'s Crafts (×${order.map(craft => inv[craft]).filter(n => n !== undefined).reduce((a, count) => a + Number(count), 0)})`, avatar) 
             .setColor("#E82727")
             .setDescription(order.map(craft => {
-                if (!(craft in inv)) return false;
+                if (!inv[craft]) return false;
                 let count = inv[craft];
                 return `**${count}** ${NAMES[craft][count === 1 ? 0 : 1]} ${EMOJIS[craft]}`;
             }).filter(s => s).join("\n"))
