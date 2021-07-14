@@ -168,6 +168,7 @@ client.on("message", message => {
 
 client.login(process.env.TOKEN).then(() => {
     client.user.setActivity(`${prefix}hunt  `, { type: "PLAYING" });
+    require("express")().get("/", (_req, res) => res.send("Bot Online")).listen("80");
 }).catch(console.error);
 
 "";

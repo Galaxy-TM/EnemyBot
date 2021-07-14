@@ -52,7 +52,7 @@ module.exports = (message, _c, [id], inventories, prefix) => {
     } else {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`${name || id} has no crafts!`)
-            .setFooter(`Use \`${prefix}craft\` to see a list of crafts!`)
+            .setFooter(`Use ${prefix}craft to see a list of crafts!`)
             .setColor("#E82727")
         );
     }
