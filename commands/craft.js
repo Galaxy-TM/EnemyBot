@@ -4,26 +4,7 @@ const NAMES = require("../lib/names");
 
 /** @typedef {Object<string, number>} Recipe */
 /** @type {Object<string, Recipe>} */
-const RECIPES = {
-    arrow_shooter: {
-        mover: 1,
-        generator: 1,
-        rotator: 2
-    },
-    mover_gear: {
-        mover: 3,
-        rotator: 1
-    },
-    enemy_vault: {
-        slide: 4,
-        generator: 1
-    },
-    counter: {
-        generator: 1,
-        push: 2,
-        trash: 1
-    }
-};
+const RECIPES = require("../lib/recipes");
 
 module.exports = (message, _c, args, inventories, prefix, setInv) => {
     if (!(message.author.id in inventories)) {

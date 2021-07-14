@@ -1,0 +1,20 @@
+{
+    "arrow_shooter": {
+        "mover": 1,
+        "generator": 1,
+        "rotator": 2
+    },
+    "mover_gear": {
+        "mover": 3,
+        "rotator": 1
+    },
+    "enemy_vault": {
+        "slide": 4,
+        "generator": 1
+    },
+    "counter": {
+        "generator": 1,
+        "push": 2,
+        "trash": 1
+    }
+}

@@ -56,8 +56,14 @@ const commands = {
     },
     bank: {
         cooldown: 1000,
-        aliases: ["bank", "b", "inv", "i"],
+        aliases: ["bank", "b"],
         func: require("./commands/bank"),
+        perms: "NORMAL"
+    },
+    crafts: {
+        cooldown: 1000,
+        aliases: ["crafts", "cs"],
+        func: require("./commands/crafts"),
         perms: "NORMAL"
     },
     daily: {
