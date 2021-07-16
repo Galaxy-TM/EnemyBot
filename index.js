@@ -48,10 +48,10 @@ function toTime(ms = 0) {
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
 const commands = {
-    hunt: {
+    search: {
         cooldown: 60 * 60 * 1000,
-        aliases: ["hunt", "h"],
-        func: require("./commands/hunt"),
+        aliases: ["search", "s"],
+        func: require("./commands/search"),
         perms: "NORMAL"
     },
     bank: {
@@ -95,10 +95,10 @@ const commands = {
         },
         perms: "NORMAL"
     },
-    give: {
+    add: {
         cooldown: 1000,
-        aliases: ["give"],
-        func: require("./commands/give"),
+        aliases: ["add"],
+        func: require("./commands/add"),
         perms: "ADMIN"
     },
     reset: {
