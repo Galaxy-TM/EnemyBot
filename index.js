@@ -80,7 +80,7 @@ const commands = {
     },
     help: {
         cooldown: 1000,
-        aliases: ["help"],
+        aliases: ["help", "H"],
         func: message => {
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle("Help")
