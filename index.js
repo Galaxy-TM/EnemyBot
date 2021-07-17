@@ -84,7 +84,7 @@ const commands = {
         func: message => {
             const fields = Object.entries(commands).map(([cmdName, { cooldown, aliases, perms }]) => ({
                 name: `${EMOJIS[cmdName]} ${cmdName}`,
-                value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}          \u200c`,
+                value: /*`**Cooldown**: ${toTime(cooldown)}\n*/`${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}          \u200c`,
                 inline: true,
                 perms
             }));
