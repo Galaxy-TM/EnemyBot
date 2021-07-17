@@ -85,7 +85,7 @@ const commands = {
             const fields = Object.entries(commands).map(([cmdName, { cooldown, aliases, perms }]) => ({
                 name: `${EMOJIS[cmdName]} ${cmdName}`,
                 value: /*`**Cooldown**: ${toTime(cooldown)}\n*/`${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}          \u200c`,
-                inline: true,
+                // inline: true,
                 perms
             }));
             message.channel.send(new Discord.MessageEmbed()
