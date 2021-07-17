@@ -64,7 +64,7 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
                 (reaction, user) => (reaction.emoji.name === "✅" || reaction.emoji.name === "❌") && user.id === message.author.id, 
                 { max: 1, time: 60000 }
             ).then(collected => {
-                if (collected.first()?.emoji.name === "✅") {
+                if (collected.first() && collected.first().emoji.name === "✅") {
                     for (let item in RECIPE) {
                         inv[item] -= RECIPE[item];
                     }
