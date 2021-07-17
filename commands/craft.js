@@ -8,7 +8,10 @@ const RECIPES = require("../lib/recipes");
 
 module.exports = (message, _c, args, inventories, prefix, setInv) => {
     if (!(message.author.id in inventories)) {
-        message.channel.send("Since you don't have an inventory, I won't bother evaluating.");
+        message.channel.send(new Discord.MessageEmbed()
+            .setTitle("You do not have an inventory.")
+            .setColor("#E82727")
+        );
         return;
     }
     if (!args[0]) {

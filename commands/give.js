@@ -3,6 +3,13 @@ const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 
 module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, setInv) => {
+    if (!(message.author.id in inventories)) {
+        message.channel.send(new Discord.MessageEmbed()
+            .setTitle("You do not have an inventory.")
+            .setColor("#E82727")
+        );
+        return;
+    }
     if (!(item in NAMES)) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`Item \`${item}\` does not exist.`)
@@ -16,7 +23,7 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
             .setColor("#E82727")
         );
         return;
-    }1  
+    }
 
     let name;
     let avatar;
@@ -37,7 +44,7 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
                 } else {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`${member.nickname || member.user.username} is a bot.`)
-                        .setFooter("Bots don't have inventories!")
+                        .setFooter("Bots don't have banks!")
                         .setColor("#E82727")
                     );
                     return;
@@ -52,15 +59,27 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
         }
     }
 
-    if (!(id in inventories)) inventories[id] = {};
-    const inv = inventories[id];
-    if (!(item in inv)) inv[item] = 0;
-
     count = Number(count);
-    inv[item] += count;
-    
+
+    if (!(id in inventories)) inventories[id] = {};
+    const to = inventories[id];
+
+    const from = inventories[message.author.id];
+
+    if (!(item in to)) to[item] = 0;
+    if (!(item in from) || from[item] < count) {
+        message.channel.send(new Discord.MessageEmbed()
+            .setTitle(`Your inventory does not have ${count} ${NAMES[item][count === 1 ? 0 : 1]}`)
+            .setColor("#E82727")
+        );
+    }
+
+    from[item] -= count;
+    to[item] += count;
+
     message.channel.send(new Discord.MessageEmbed()
-        .setTitle(`${name || id} has been given **${count} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}** and now has **${inv[item]} ${NAMES[item][inv[item] === 1 ? 0 : 1]} ${EMOJIS[item]}**`)
+        .setTitle(`You have given ${name || id} ${count} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}.`)
+        .setDescription(`They now have ${to[item]} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}\nand you now have ${from[item]} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}`)
         .setColor("#E82727")
     );
 

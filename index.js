@@ -82,7 +82,7 @@ const commands = {
         cooldown: 1000,
         aliases: ["help", "h"],
         func: message => {
-            const comamnds = Object.entries(commands).map(([cmdName, { cooldown, aliases, perms }]) => ({
+            const comamnds = Object.entries(commands).map(([cmdName, { perms }]) => ({
                 str: `${EMOJIS[cmdName]} ${cmdName}`,
                 perms
             }));
@@ -99,6 +99,12 @@ const commands = {
                 )
             }
         },
+        perms: "NORMAL"
+    },
+    give: {
+        cooldown: 1000,
+        aliases: ["give", "gift", "g"],
+        func: require("./commands/give"),
         perms: "NORMAL"
     },
     add: {
