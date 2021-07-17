@@ -82,22 +82,20 @@ const commands = {
         cooldown: 1000,
         aliases: ["help", "h"],
         func: message => {
-            const fields = Object.entries(commands).map(([cmdName, { cooldown, aliases, perms }]) => ({
-                name: `${EMOJIS[cmdName]} ${cmdName}`,
-                value: /*`**Cooldown**: ${toTime(cooldown)}\n*/`${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}          \u200c`,
-                // inline: true,
+            const comamnds = Object.entries(commands).map(([cmdName, { cooldown, aliases, perms }]) => ({
+                str: `${EMOJIS[cmdName]} ${cmdName}`,
                 perms
             }));
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle("Commands")
                 .setColor("#E82727")
-                .addFields(fields.filter(({ perms }) => perms === "NORMAL"))
-            )
-            if (ADMINID.includes(message.author.id)) {
-                message.channel.send(new Discord.MessageEmbed()
+                .setDescription(comamnds.filter(({ perms }) => perms === "NORMAL").map(({str}) => str).join("\n"))
+                )
+                if (ADMINID.includes(message.author.id)) {
+                    message.channel.send(new Discord.MessageEmbed()
                     .setTitle("🔧 Admin Commands")
                     .setColor("#E82727")
-                    .addFields(fields.filter(({ perms }) => perms === "ADMIN"))
+                    .setDescription(comamnds.filter(({ perms }) => perms === "ADMIN").map(({str}) => str).join("\n"))
                 )
             }
         },
