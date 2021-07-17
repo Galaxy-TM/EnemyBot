@@ -17,9 +17,9 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
         );
         return;
     }
-    if (isNaN(count)) {
+    if (isNaN(count) || (count <= 0) || ((count % 1) !== 0)) {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`\`${count}\` has to be a number.`)
+            .setTitle(`\`${count}\` has to be a positive integer number.`)
             .setColor("#E82727")
         );
         return;
@@ -69,9 +69,10 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
     if (!(item in to)) to[item] = 0;
     if (!(item in from) || from[item] < count) {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`Your inventory does not have ${count} ${NAMES[item][count === 1 ? 0 : 1]}`)
+            .setTitle(`Your inventory does not have enough ${NAMES[item][1]}`)
             .setColor("#E82727")
         );
+        return;
     }
 
     from[item] -= count;
@@ -79,7 +80,7 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
 
     message.channel.send(new Discord.MessageEmbed()
         .setTitle(`You have given ${name || id} ${count} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}.`)
-        .setDescription(`They now have ${to[item]} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}\nand you now have ${from[item]} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}`)
+        .setDescription(`They now have ${to[item]} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}\nand you now have ${from[item]} ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}.`)
         .setColor("#E82727")
     );
 
