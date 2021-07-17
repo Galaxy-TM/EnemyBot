@@ -83,8 +83,8 @@ const commands = {
         aliases: ["help", "h"],
         func: message => {
             const fields = Object.entries(commands).map(([cmdName, { cooldown, aliases, perms }]) => ({
-                name: `${EMOJIS[cmdName]} ${cmdName}                    \u200c`,
-                value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}`,
+                name: `${EMOJIS[cmdName]} ${cmdName}`,
+                value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}          \u200c`,
                 inline: true,
                 perms
             }));
@@ -95,18 +95,18 @@ const commands = {
                     ...fields.filter(({ perms }) => perms === "NORMAL"),
                     ...(ADMINID.includes(message.author.id) ? [
                         {
-                            name: "__________",
-                            value: "¯¯¯¯¯¯¯¯¯¯",
+                            name: "\u200c",
+                            value: "\u200c",
                             inline: true
                         },
                         {
-                            name: "   ADMIN   ",
-                            value: "  COMMANDS  ",
+                            name: "\u200c",
+                            value: " ADMIN COMMANDS ",
                             inline: true
                         },
                         {
-                            name: "__________",
-                            value: "¯¯¯¯¯¯¯¯¯¯",
+                            name: "\u200c",
+                            value: "\u200c",
                             inline: true
                         },
                         ...fields.filter(({ perms }) => perms === "ADMIN")
