@@ -89,30 +89,17 @@ const commands = {
                 perms
             }));
             message.channel.send(new Discord.MessageEmbed()
-                .setTitle("Help")
+                .setTitle("Commands")
                 .setColor("#E82727")
-                .addFields([ 
-                    ...fields.filter(({ perms }) => perms === "NORMAL"),
-                    ...(ADMINID.includes(message.author.id) ? [
-                        {
-                            name: "\u200c",
-                            value: "\u200c",
-                            inline: true
-                        },
-                        {
-                            name: "\u200c",
-                            value: " ADMIN COMMANDS ",
-                            inline: true
-                        },
-                        {
-                            name: "\u200c",
-                            value: "\u200c",
-                            inline: true
-                        },
-                        ...fields.filter(({ perms }) => perms === "ADMIN")
-                    ] : [])
-                ])
+                .addFields(fields.filter(({ perms }) => perms === "NORMAL"))
             )
+            if (ADMINID.includes(message.author.id)) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle("🔧 Admin Commands")
+                    .setColor("#E82727")
+                    .addFields(fields.filter(({ perms }) => perms === "ADMIN"))
+                )
+            }
         },
         perms: "NORMAL"
     },
