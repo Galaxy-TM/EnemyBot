@@ -98,6 +98,14 @@ const commands = {
                             name: "__________",
                             value: "¯¯¯¯¯¯¯¯¯¯"
                         },
+                        {
+                            name: "   ADMIN   ",
+                            value: "  COMMANDS  "
+                        },
+                        {
+                            name: "__________",
+                            value: "¯¯¯¯¯¯¯¯¯¯"
+                        },
                         ...fields.filter(({ perms }) => perms === "ADMIN")
                     ] : [])
                 ])
