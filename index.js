@@ -101,7 +101,6 @@ const commands = {
 
         func: (message, _c, [cmdArg]) => {
             if (cmdArg) {
-                console.log(Object.entries(commands));
                 let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => aliases.includes(cmdArg));
                 if (command && command.perms !== "ADMIN" || ADMINID.includes(message.author.id)) {
                     message.channel.send(new Discord.MessageEmbed()
@@ -189,7 +188,7 @@ client.on("message", message => {
     if (!inventories) return;
     if (!cooldowns) return;
     if (message.guild.id !== GUILDID) return;
-    if (message.channel.id !== CHANNELID) return;
+    // if (message.channel.id !== CHANNELID) return;
     if (!message.content.startsWith(prefix)) return;
     if (message.author.bot) return;
 
