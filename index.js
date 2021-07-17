@@ -1,5 +1,5 @@
 require("dotenv").config();
-const Discord = require("discord.js");  
+const Discord = require("discord.js");
 const client = new Discord.Client();
 const prefix = "-";
 
@@ -82,15 +82,25 @@ const commands = {
         cooldown: 1000,
         aliases: ["help", "h"],
         func: message => {
+            const fields = Object.entries(commands).map(([cmdName, { cooldown, aliases, perms }]) => ({
+                name: `${EMOJIS[cmdName]} ${cmdName}                    \u200c`,
+                value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}`,
+                inline: true,
+                perms
+            }));
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle("Help")
                 .setColor("#E82727")
-                .addFields(Object.entries(commands).map(([cmdName, {cooldown, aliases, perms}]) => ({
-                    name: `${EMOJIS[cmdName]} ${cmdName} ${(perms === "ADMIN" && ADMINID.includes(message.author.id)) ? "(ADMIN)" : ""}          `,
-                    value: `**Cooldown**: ${toTime(cooldown)}\n${aliases.length > 1 ? `**Aliases**: ${aliases.join(", ")}\n` : ""}`,
-                    inline: true,
-                    perms
-                })).filter(({perms}) => perms === "NORMAL" || ADMINID.includes(message.author.id)))
+                .addFields([ 
+                    ...fields.filter(({ perms }) => perms === "NORMAL"),
+                    ...(ADMINID.includes(message.author.id) ? [
+                        {
+                            name: "__________",
+                            value: "¯¯¯¯¯¯¯¯¯¯"
+                        },
+                        ...fields.filter(({ perms }) => perms === "ADMIN")
+                    ] : [])
+                ])
             )
         },
         perms: "NORMAL"
