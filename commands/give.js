@@ -5,18 +5,18 @@ const NAMES = require("../lib/names");
 module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, setInv) => {
     if (!(item in NAMES)) {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`**${item}** isn't in \`NAMES\`.`)
+            .setTitle(`Item \`${item}\` does not exist.`)
             .setColor("#E82727")
         );
         return;
     }
     if (isNaN(count)) {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`**${count}** needs to be a number.`)
+            .setTitle(`\`${count}\` has to be a number.`)
             .setColor("#E82727")
         );
         return;
-    }
+    }1  
 
     let name;
     let avatar;
