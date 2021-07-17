@@ -73,7 +73,7 @@ const commands = {
         perms: "NORMAL"
     },
     craft: {
-        cooldown: 5 * 1000,
+        cooldown: 1000,
         aliases: ["craft", "c"],
         func: require("./commands/craft"),
         perms: "NORMAL"
@@ -104,7 +104,7 @@ const commands = {
         perms: "NORMAL"
     },
     add: {
-        cooldown: 1000,
+        cooldown: 0,
         aliases: ["add"],
         func: require("./commands/add"),
         perms: "ADMIN"
@@ -116,7 +116,7 @@ const commands = {
         perms: "ADMIN"
     },
     status: {
-        cooldown: 1000,
+        cooldown: 0,
         aliases: ["status"],
         func: (_m, _c, [type, ...status]) => {
             client.user.setActivity(status.join(" "), { type });
