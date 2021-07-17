@@ -80,7 +80,7 @@ const commands = {
     },
     help: {
         cooldown: 1000,
-        aliases: ["help", "H"],
+        aliases: ["help", "h"],
         func: message => {
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle("Help")
@@ -105,6 +105,14 @@ const commands = {
         cooldown: 0,
         aliases: ["reset"],
         func: require("./commands/reset"),
+        perms: "ADMIN"
+    },
+    status: {
+        cooldown: 1000,
+        aliases: ["status"],
+        func: (_m, _c, [type, ...status]) => {
+            client.user.setActivity(status.join(" "), { type });
+        },
         perms: "ADMIN"
     }
 };

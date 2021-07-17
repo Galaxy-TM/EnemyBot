@@ -40,7 +40,6 @@ module.exports = (message, _c, [id], inventories, prefix) => {
     }
     if (id in inventories) {
         const inv = inventories[id];
-        console.log(inv);
         message.channel.send(new Discord.MessageEmbed()
             .setAuthor(`${name || id}'s Bank (×${order.map(cell => inv[cell]).filter(n => n).reduce((a, count) => a + Number(count), 0)})`, avatar) 
             .setColor("#E82727")
