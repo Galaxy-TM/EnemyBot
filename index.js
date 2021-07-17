@@ -107,7 +107,7 @@ const commands = {
                         .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
                         .setDescription(command.description)
                         .addField(
-                            `\`\`\`${command.syntax}\`\`\``,
+                            `\`\`\`\n${command.syntax}\n\`\`\``,
                             `Aliases: ${command.aliases.join(", ")}`
                         )
                         .setColor("#E82727")
