@@ -24,7 +24,12 @@ module.exports = (message, _c, _a, _i, _p, setInv, setCD) => {
                         rotator: "Infinity",
                         rotator_ccw: "Infinity",
                         trash: "Infinity",
-                        enemy: "Infinity"
+                        enemy: "Infinity",
+                        
+                        arrow_shooter: "Infinity",
+                        mover_gear: "Infinity",
+                        enemy_vault: "Infinity",
+                        counter: "Infinity",
                     }
                 });
                 setCD({});

@@ -40,7 +40,13 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
             avatar = member.user.avatarURL();
             if (member.user.bot) {
                 if (member.user.id === "862698871624957982") {
-                    name = "VeryEpicEnemyBot69420";
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle("I know you want to be generous towards me.")
+                        .setDescription("However I already have Infinite stuff!")
+                        .setFooter(":(")
+                        .setColor("#E82727")
+                    );
+                    return;
                 } else {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`${member.nickname || member.user.username} is a bot.`)

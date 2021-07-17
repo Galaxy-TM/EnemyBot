@@ -51,77 +51,124 @@ const commands = {
     search: {
         cooldown: 60 * 60 * 1000,
         aliases: ["search", "s"],
+        syntax: `${prefix}search`,
+        description: `Use every hour to get some ${EMOJIS.mover}`,
+
         func: require("./commands/search"),
         perms: "NORMAL"
     },
     bank: {
         cooldown: 1000,
         aliases: ["bank", "b"],
+        syntax: `${prefix}bank ?<@user>`,
+        description: `Check on your ${EMOJIS.mover}`,
+
         func: require("./commands/bank"),
         perms: "NORMAL"
     },
     crafts: {
         cooldown: 1000,
         aliases: ["crafts", "cs"],
+        syntax: `${prefix}crafts ?<@user>`,
+        description: `Check on your ${EMOJIS.arrow_shooter}`,
+
         func: require("./commands/crafts"),
         perms: "NORMAL"
     },
     daily: {
         cooldown: 23 * 60 * 60 * 1000 + 40 * 60 * 1000,
         aliases: ["daily", "d"],
+        syntax: `${prefix}daily`,
+        description: `Use everyday for 2-4 ${EMOJIS.mover}`,
+
         func: require("./commands/daily"),
         perms: "NORMAL"
     },
     craft: {
         cooldown: 1000,
         aliases: ["craft", "c"],
+        syntax: `${prefix}craft ?<craft_name>`,
+        description: `Craft some ${EMOJIS.arrow_shooter}`,
+
         func: require("./commands/craft"),
         perms: "NORMAL"
     },
     help: {
         cooldown: 1000,
         aliases: ["help", "h"],
-        func: message => {
-            const comamnds = Object.entries(commands).map(([cmdName, { perms }]) => ({
-                str: `${EMOJIS[cmdName]} ${cmdName}`,
-                perms
-            }));
-            message.channel.send(new Discord.MessageEmbed()
-                .setTitle("Commands")
-                .setColor("#E82727")
-                .setDescription(comamnds.filter(({ perms }) => perms === "NORMAL").map(({str}) => str).join("\n"))
-                )
+        syntax: `${prefix}help ?<command>`,
+        description: `See a list of commands`,
+
+        func: (message, _c, [cmdArg]) => {
+            if (cmdArg) {
+                let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => aliases.includes(cmdArg));
+                if (command) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`Help: \`${cmdName}\``)
+                        .setDescription(command.description)
+                        .addField(
+                            `\`\`\`${command.syntax}\`\`\``,
+                            `Aliases: ${command.aliases.join(", ")}`
+                        )
+                        .setColor("#E82727")
+                    );
+                } else {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`Could not find command \`${cmdArg}\``)
+                        .setColor("#E82727")
+                    );
+                }
+            } else {
+                const commandsStr = Object.entries(commands).map(([cmdName, { perms }]) => ({
+                    str: `${EMOJIS[cmdName]} ${cmdName}`,
+                    perms
+                }));
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle("Commands")
+                    .setColor("#E82727")
+                    .setDescription(commandsStr.filter(({ perms }) => perms === "NORMAL").map(({ str }) => str).join("\n"))
+                );
                 if (ADMINID.includes(message.author.id)) {
                     message.channel.send(new Discord.MessageEmbed()
-                    .setTitle("🔧 Admin Commands")
-                    .setColor("#E82727")
-                    .setDescription(comamnds.filter(({ perms }) => perms === "ADMIN").map(({str}) => str).join("\n"))
-                )
+                        .setTitle("🔧 Admin Commands")
+                        .setColor("#E82727")
+                        .setDescription(commandsStr.filter(({ perms }) => perms === "ADMIN").map(({ str }) => str).join("\n"))
+                    )
+                }
             }
-        },
-        perms: "NORMAL"
+        }
     },
     give: {
         cooldown: 1000,
         aliases: ["give", "gift", "g"],
+        syntax: `${prefix}give <@user> <item> [count]`,
         func: require("./commands/give"),
         perms: "NORMAL"
     },
     add: {
         cooldown: 0,
         aliases: ["add"],
+        syntax: `${prefix}add <@user> <item> [count]`,
+        description: `Materialise items out of nowhere`,
+
         func: require("./commands/add"),
         perms: "ADMIN"
     },
     reset: {
         cooldown: 0,
         aliases: ["reset"],
+        syntax: `${prefix}reset`,
+        description: `Reset everyone's progress\n||Ooooh what does this red button do- 👉🔴||`,
+
         func: require("./commands/reset"),
         perms: "ADMIN"
     },
     status: {
         cooldown: 0,
         aliases: ["status"],
+        syntax: `${prefix}status <type> <...status>`,
+        description: `Set the bot's status`,
+
         func: (_m, _c, [type, ...status]) => {
             client.user.setActivity(status.join(" "), { type });
         },
