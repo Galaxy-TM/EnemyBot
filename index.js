@@ -96,15 +96,18 @@ const commands = {
                     ...(ADMINID.includes(message.author.id) ? [
                         {
                             name: "__________",
-                            value: "¯¯¯¯¯¯¯¯¯¯"
+                            value: "¯¯¯¯¯¯¯¯¯¯",
+                            inline: true
                         },
                         {
                             name: "   ADMIN   ",
-                            value: "  COMMANDS  "
+                            value: "  COMMANDS  ",
+                            inline: true
                         },
                         {
                             name: "__________",
-                            value: "¯¯¯¯¯¯¯¯¯¯"
+                            value: "¯¯¯¯¯¯¯¯¯¯",
+                            inline: true
                         },
                         ...fields.filter(({ perms }) => perms === "ADMIN")
                     ] : [])
