@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 
-module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, setInv) => {
+module.exports = (message, _c, [id, item, count = 1], inventories, prefix, setInv) => {
     if (!(message.author.id in inventories)) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle("You do not have an inventory.")
@@ -28,10 +28,12 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
     let name;
     let avatar;
     if (!id) {
-        const member = message.member;
-        id = member.id;
-        name = member.nickname || member.user.username;
-        avatar = member.user.avatarURL();
+        message.channel.send(new Discord.MessageEmbed()
+            .setTitle(`\`${count}\` has to be a positive integer number.`)
+            .setColor("#E82727")
+            .setFooter(`See ${prefix}`)
+        );
+        return;
     } else if (isNaN(id)) {
         if (message.mentions.members.size) {
             const member = message.mentions.members.first();
