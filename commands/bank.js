@@ -46,7 +46,7 @@ module.exports = (message, _c, [id], inventories, prefix) => {
             .setDescription(order.map(cell => {
                 if (!inv[cell]) return false;
                 let count = inv[cell];
-                return `**${count}** ${NAMES[cell][count === 1 ? 0 : 1]} ${EMOJIS[cell]}`;
+                return `**${count < 0 ? `[DEBT] ${-count}` : count}** ${NAMES[cell][count === 1 ? 0 : 1]} ${EMOJIS[cell]}`;
             }).filter(s => s).join("\n"))
         );
     } else {

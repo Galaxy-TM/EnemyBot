@@ -7,6 +7,7 @@ module.exports = (message, _c, [item], inventories, _p, setInv) => {
     if (!item) {
         message.channel.send(new Discord.MessageEmbed()
             .setDescription("what do i set to infinity lol")
+            .setColor("#E82727")
         );
         return;
     }
@@ -15,5 +16,6 @@ module.exports = (message, _c, [item], inventories, _p, setInv) => {
 
     message.channel.send(new Discord.MessageEmbed()
         .setDescription(`**<@!862698871624957982> now has Infinite ${NAMES[item][1]} ${EMOJIS[item]}**`)
+        .setColor("#E82727")
     );
 };
