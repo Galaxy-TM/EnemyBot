@@ -41,12 +41,12 @@ module.exports = (message, _c, [id], inventories, prefix) => {
     if (id in inventories) {
         const inv = inventories[id];
         message.channel.send(new Discord.MessageEmbed()
-            .setAuthor(`${name || id}'s Crafts (×${order.map(craft => inv[craft]).filter(n => n).reduce((a, count) => a + Number(count), 0)})`, avatar) 
+            .setAuthor(`${name || id}'s Crafts (×${order.map(craft => inv[craft]).filter(n => n && n > 0).reduce((a, count) => a + Number(count), 0)})`, avatar) 
             .setColor("#E82727")
             .setDescription(order.map(craft => {
                 if (!inv[craft]) return false;
                 let count = inv[craft];
-                return `**${count}** ${NAMES[craft][count === 1 ? 0 : 1]} ${EMOJIS[craft]}`;
+                return `**${count < 0 ? `[DEBT] ${-count}` : count}** ${NAMES[craft][count === 1 ? 0 : 1]} ${EMOJIS[craft]}`;
             }).filter(s => s).join("\n"))
         );
     } else {
