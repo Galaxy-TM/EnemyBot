@@ -157,7 +157,7 @@ const commands = {
     reset: {
         cooldown: 0,
         aliases: ["reset"],
-        syntax: `${prefix}reset`,
+        syntax: `${prefix}reset ?<type: cd | inv | all>`,
         description: `Reset everyone's progress\n||Ooooh what does this red button do- 👉🔴||`,
 
         func: require("./commands/reset"),
@@ -188,7 +188,7 @@ client.on("message", message => {
     if (!inventories) return;
     if (!cooldowns) return;
     if (message.guild.id !== GUILDID) return;
-    // if (message.channel.id !== CHANNELID) return;
+    if (message.channel.id !== CHANNELID) return;
     if (!message.content.startsWith(prefix)) return;
     if (message.author.bot) return;
 
