@@ -173,6 +173,15 @@ const commands = {
             client.user.setActivity(status.join(" "), { type });
         },
         perms: "ADMIN"
+    },
+    setInfinity: {
+        cooldown: 0,
+        aliases: ["setInfinity"],
+        syntax: `${prefix}setInfinity <item>`,
+        description: `Gives Infinite items to the bot`,
+
+        func: require("./commands/setInfinity"),
+        perms: "ADMIN"
     }
 };
 

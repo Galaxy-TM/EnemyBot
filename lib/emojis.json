@@ -8,6 +8,8 @@
     "trash": "<:trash:861158960597958657>",
     "enemy": "<:enemy:861502470932922378>",
 
+    "rickroll": "<a:rickroll:866197755343929365>",
+
     "arrow_shooter": "<:arrow_shooter:864089558592127037>",
     "mover_gear": "<:mover_gear:864079800872337418>",
     "enemy_vault": "<:vault:864099929918799872>",
@@ -23,6 +25,5 @@
     "give": "<:plus:864484134985793596>",
     "reset": "🔁",
     "status": "💬",
-
-    "rickroll": "<a:rickroll:866197755343929365>"
+    "setInfinity": "♾"
 }
