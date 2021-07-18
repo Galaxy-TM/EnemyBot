@@ -6,7 +6,7 @@ const NAMES = require("../lib/names");
 /** @type {Object<string, Recipe>} */
 const RECIPES = require("../lib/recipes");
 
-module.exports = (message, _c, args, inventories, prefix, setInv) => {
+module.exports = (message, _c, [craftName], inventories, prefix, setInv) => {
     if (!(message.author.id in inventories)) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle("You do not have an inventory.")
@@ -14,7 +14,7 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
         );
         return;
     }
-    if (!args[0]) {
+    if (!craftName) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`Crafting Recipes`)
             .setColor("#E82727")
@@ -26,8 +26,8 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
         );
         return;
     }
-    if (args[0] in RECIPES) {
-        const RECIPE = RECIPES[args[0]];
+    if (craftName in RECIPES) {
+        const RECIPE = RECIPES[craftName];
         const str = [];
         const inv = inventories[message.author.id];
         let canCraft = true;
@@ -42,9 +42,9 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
                 canCraft = false;
             }
         }
-        const NAME = NAMES[args[0]][0];
-        const EMOJI = EMOJIS[args[0]];
-        const ARTICLE = NAMES[args[0]][2];
+        const NAME = NAMES[craftName][0];
+        const EMOJI = EMOJIS[craftName];
+        const ARTICLE = NAMES[craftName][2];
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(canCraft 
                 ? `You have enough resources to craft ${ARTICLE} ${NAME} ${EMOJI}!` 
@@ -68,8 +68,8 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
                     for (let item in RECIPE) {
                         inv[item] -= RECIPE[item];
                     }
-                    if (!(args[0] in inv)) inv[args[0]] = 0;
-                    inv[args[0]]++;
+                    if (!([craftName][0] in inv)) inv[craftName] = 0;
+                    inv[[craftName][0]]++;
                     confirmMsg.edit(new Discord.MessageEmbed()
                         .setTitle(`Crafted ${ARTICLE} ${NAME} ${EMOJI}`)
                         .setColor("#E82727")
@@ -85,7 +85,7 @@ module.exports = (message, _c, args, inventories, prefix, setInv) => {
         });
     } else {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`Craft ${args[0]} is invalid.`)
+            .setTitle(`Craft ${craftName} is invalid.`)
             .setColor("#E82727")
         );
     }
