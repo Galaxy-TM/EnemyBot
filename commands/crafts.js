@@ -3,7 +3,7 @@ const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 const order = Object.keys(require("../lib/recipes"));
 
-/** @type {CommandFunc} */
+/** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [id], inventories, prefix) => {
     let name;
     let avatar;

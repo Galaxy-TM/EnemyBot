@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 
+/** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, setInv) => {
     if (!(item in NAMES)) {
         message.channel.send(new Discord.MessageEmbed()

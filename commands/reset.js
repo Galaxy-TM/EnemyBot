@@ -1,6 +1,7 @@
 const EMOJIS = require("../lib/emojis");
 const Discord = require("discord.js");
 
+/** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [type], _i, _p, setInv, setCD) => {
     const embed = new Discord.MessageEmbed()
         .setAuthor("⚠️ DANGER")

@@ -3,6 +3,7 @@ const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 const randomCell = require("../lib/randomCell");
 
+/** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, _a, inventories, _p, setInv) => {
     if (!(message.author.id in inventories)) inventories[message.author.id] = {};
     const inv = inventories[message.author.id];

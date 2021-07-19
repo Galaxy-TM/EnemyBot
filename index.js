@@ -3,12 +3,20 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const prefix = "-";
 
+/** @type { { [ name: string ]: string } } */
 const EMOJIS = require("./lib/emojis");
 const ADMINID = ["702757890460745810", "520293520418930690"];
 
 // Inv
 const db = new (require("@replit/database"))();
 
+/**
+ * @typedef { { [item: string]: number } } InvLike
+ * @typedef { { [id: string]: InvLike } } InvsLike
+ * @typedef { (message: Discord.Message, commandName: string, args: string[], inventories: InvsLike, prefix: string, setInv: (inv?: InvsLike) => void, setCD: (cd?: InvsLike) => void) => void } CommandFunc
+ * @typedef { { cooldown: number, aliases: string[], syntax: string, description: string, func: CommandFunc, perms: "NORMAL" | "ADMIN" } } Command
+ */
+/** @type {InvsLike} */
 let inventories = null;
 db.get("inv").then(inv => {
     if (inv) {
@@ -19,6 +27,7 @@ db.get("inv").then(inv => {
     }
 });
 
+/** @type {InvsLike} */
 let cooldowns = null;
 db.get("cd").then(cd => {
     if (cd) {
@@ -47,6 +56,8 @@ function toTime(ms = 0) {
     }
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
+
+/** @type { { [cmdName: string]: Command } } */
 const commands = {
     search: {
         cooldown: 60 * 60 * 1000,
@@ -107,7 +118,7 @@ const commands = {
                         .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
                         .setDescription(command.description)
                         .addField(
-                            `\`${command.syntax}\``,
+                            `\`\`\`${command.syntax}\`\`\`\``,
                             `Aliases: ${command.aliases.join(", ")}`
                         )
                         .setColor("#E82727")
@@ -142,7 +153,18 @@ const commands = {
         cooldown: 1000,
         aliases: ["give", "gift", "g"],
         syntax: `${prefix}give <@user> <item> [count]`,
+        description: `Give someone some items`,
+        
         func: require("./commands/give"),
+        perms: "NORMAL"
+    },
+    trade: {
+        cooldown: 10000,
+        aliases: ["trade", "tr", "t"],
+        syntax: `${prefix}trade <@user>\n${prefix} a`,
+        description: `Trade with someone`,
+
+        func: require("./commands/trade"),
         perms: "NORMAL"
     },
     add: {
@@ -213,7 +235,7 @@ client.on("message", message => {
             );
             return;
         } else if (command.perms === "NORMAL") {
-
+            
         }
 
         if (!(message.author.id in cooldowns)) cooldowns[message.author.id] = {};

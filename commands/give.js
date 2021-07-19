@@ -2,10 +2,19 @@ const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 
+/** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [id, item, count = 1], inventories, prefix, setInv) => {
     if (!(message.author.id in inventories)) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle("You do not have an inventory.")
+            .setColor("#E82727")
+        );
+        return;
+    }
+    if (!item) {
+        message.channel.send(new Discord.MessageEmbed()
+            .setTitle(`\`${prefix}give\` Syntax`)
+            .setDescription(`\`${prefix}give <@user> <item> [count]\``)
             .setColor("#E82727")
         );
         return;

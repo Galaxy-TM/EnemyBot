@@ -2,10 +2,11 @@ const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 
-/** @typedef {Object<string, number>} Recipe */
-/** @type {Object<string, Recipe>} */
+/** @typedef { Object<string, number> } Recipe */
+/** @type { Object<string, Recipe> } */
 const RECIPES = require("../lib/recipes");
 
+/** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [craftName], inventories, prefix, setInv) => {
     if (!(message.author.id in inventories)) {
         message.channel.send(new Discord.MessageEmbed()
