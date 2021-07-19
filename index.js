@@ -159,7 +159,7 @@ const commands = {
         perms: "NORMAL"
     },
     trade: {
-        cooldown: 10000,
+        cooldown: 1000,
         aliases: ["trade", "tr", "t"],
         syntax: `${prefix}trade <@user>\n${prefix} a`,
         description: `Trade with someone`,
