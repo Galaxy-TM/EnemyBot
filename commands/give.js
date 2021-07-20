@@ -13,7 +13,7 @@ module.exports = (message, _c, [id, item, count = 1], inventories, prefix, setIn
     }
     if (!item) {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`\`${prefix}give\` Syntax`)
+            .setTitle(`Command Syntax`)
             .setDescription(`\`${prefix}give <@user> <item> [count]\``)
             .setColor("#E82727")
         );
@@ -28,7 +28,7 @@ module.exports = (message, _c, [id, item, count = 1], inventories, prefix, setIn
     }
     if (isNaN(count) || (count <= 0) || ((count % 1) !== 0)) {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`\`${count}\` has to be a positive integer number.`)
+            .setTitle(`\`count\` has to be a positive integer number.`)
             .setColor("#E82727")
         );
         return;

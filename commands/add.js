@@ -13,7 +13,7 @@ module.exports = (message, _c, [id, item = "push", count = 1], inventories, _p, 
     }
     if (isNaN(count)) {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`\`${count}\` has to be a number.`)
+            .setTitle(`\`count\` has to be a number.`)
             .setColor("#E82727")
         );
         return;

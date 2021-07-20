@@ -1,17 +1,20 @@
 const Discord = require("discord.js");
 
 /** 
+ * @typedef {import("../index").InvLike} InvLike
  * @typedef Trade
  * @property { [string, string] } ids
- * @property { [import("../index").InvLike, import("../index").InvLike] } items
+ * @property { [InvLike, InvLike] } items
+ * @property { [InvLike, InvLike] } invs
  * @property { Discord.TextChannel } channel
  */
 /** @type { Trade[] } */
 const trades = [];
+const EMOJIS = require("../lib/emoji");
+const NAMES = require("../lib/names");
 
 /** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [type, item, count = 1], inventories, prefix, setInv) => {
-    console.log(type);
     switch (type) {
         case "add":
         case "a": {
@@ -25,9 +28,26 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     );
                     return;
                 }
+                if (!(item in NAMES)) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`Item \`${item}\` does not exist.`)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+                count = Number(count);
+                if (isNaN(count) || count < 0 || ((count % 1) !== 0)) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`\`count\` has to be a positive integer number.`)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+                const index = trade.ids.indexOf(message.author.id);
+                if (!(item in trade.invs[index])) {
+                    
+                }
             }
-            count = Number(count);
-            
             break;
         }
         case undefined: {

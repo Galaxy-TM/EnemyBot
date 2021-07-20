@@ -154,7 +154,7 @@ const commands = {
         aliases: ["give", "gift", "g"],
         syntax: `${prefix}give <@user> <item> [count]`,
         description: `Give someone some items`,
-        
+
         func: require("./commands/give"),
         perms: "NORMAL"
     },
@@ -218,6 +218,10 @@ const GUILDID = "852889827229564958";
 client.on("message", message => {
     if (!inventories) return;
     if (!cooldowns) return;
+    if (!ADMINID.includes(message.author.id) || message.guild.id === "866196489676390400") {
+        if (message.guild.id !== GUILDID) return;
+        if (message.channel.id !== CHANNELID) return;
+    }
     if (message.guild.id !== GUILDID) return;
     if (message.channel.id !== CHANNELID) return;
     if (!message.content.startsWith(prefix)) return;
@@ -235,7 +239,7 @@ client.on("message", message => {
             );
             return;
         } else if (command.perms === "NORMAL") {
-            
+
         }
 
         if (!(message.author.id in cooldowns)) cooldowns[message.author.id] = {};
