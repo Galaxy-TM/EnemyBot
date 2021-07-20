@@ -10,7 +10,7 @@ const Discord = require("discord.js");
  */
 /** @type { Trade[] } */
 const trades = [];
-const EMOJIS = require("../lib/emoji");
+const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
 
 /** @type { import("../index").CommandFunc } */
@@ -45,7 +45,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 }
                 const index = trade.ids.indexOf(message.author.id);
                 if (!(item in trade.invs[index])) {
-                    
+
                 }
             }
             break;
