@@ -65,11 +65,12 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
 
                 if (item in offer) offer[item] += count;
                 else offer[item] = count;
+
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Trade offers`)
                     .addFields({
                         name: `${trade.names[0]}'s Offer:`,
-                        value: trade.offers[0].length
+                        value: Object.keys(trade.offers[0]).length
                             ? Object.entries(trade.offers[0]).map(
                                 ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
                             ).filter(n => n).join("\n")
@@ -77,11 +78,14 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         inline: true
                     }, {
                         name: "\u200c",
-                        value: new Array(Math.max(Object.keys(trade.offers[0]).length, Object.keys(trade.offers[1]).length)).fill("│").join("\n"),
+                        value: new Array(Math.min(Math.max(
+                            Object.keys(trade.offers[0]).length, 
+                            Object.keys(trade.offers[1]).length
+                        ), 1)).fill("│").join("\n"),
                         inline: true
                     }, {
                         name: `${trade.names[1]}'s Offer:`,
-                        value: trade.offers[0].length
+                        value: Object.keys(trade.offers[1]).length
                             ? Object.entries(trade.offers[1]).map(
                                 ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
                             ).filter(n => n).join("\n")
