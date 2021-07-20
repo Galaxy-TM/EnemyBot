@@ -78,7 +78,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         inline: true
                     }, {
                         name: "\u200c",
-                        value: new Array(Math.min(Math.max(
+                        value: new Array(Math.max(Math.max(
                             Object.keys(trade.offers[0]).length, 
                             Object.keys(trade.offers[1]).length
                         ), 1)).fill("│").join("\n"),
