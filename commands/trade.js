@@ -68,30 +68,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
 
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Trade offers`)
-                    .addFields({
-                        name: `${trade.names[0]}'s Offer:     \u200c`,
-                        value: Object.keys(trade.offers[0]).length
-                            ? Object.entries(trade.offers[0]).map(
-                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}    \u200c` : false
-                            ).filter(n => n).join("\n")
-                            : "*[EMPTY]*",
-                        inline: true
-                    }, {
-                        name: "│",
-                        value: new Array(Math.max(Math.max(
-                            Object.keys(trade.offers[0]).length,
-                            Object.keys(trade.offers[1]).length
-                        ), 1)).fill("│").join("\n"),
-                        inline: true
-                    }, {
-                        name: `${trade.names[1]}'s Offer:`,
-                        value: Object.keys(trade.offers[1]).length
-                            ? Object.entries(trade.offers[1]).map(
-                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
-                            ).filter(n => n).join("\n")
-                            : "*[EMPTY]*",
-                        inline: true
-                    })
+                    .addFields(...embedFields(trade))
                     .setColor("#E82727")
                 );
             }
@@ -141,30 +118,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
 
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Trade offers`)
-                    .addFields({
-                        name: `${trade.names[0]}'s Offer:     \u200c`,
-                        value: Object.keys(trade.offers[0]).length
-                            ? Object.entries(trade.offers[0]).map(
-                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}    \u200c` : false
-                            ).filter(n => n).join("\n")
-                            : "*[EMPTY]*",
-                        inline: true
-                    }, {
-                        name: "│",
-                        value: new Array(Math.max(Math.max(
-                            Object.keys(trade.offers[0]).length,
-                            Object.keys(trade.offers[1]).length
-                        ), 1)).fill("│").join("\n"),
-                        inline: true
-                    }, {
-                        name: `${trade.names[1]}'s Offer:`,
-                        value: Object.keys(trade.offers[1]).length
-                            ? Object.entries(trade.offers[1]).map(
-                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
-                            ).filter(n => n).join("\n")
-                            : "*[EMPTY]*",
-                        inline: true
-                    })
+                    .addFields(...embedFields(trade))
                     .setColor("#E82727")
                 );
             }
@@ -230,4 +184,31 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
             break;
         }
     }
+}
+/** @param {Trade} trade */
+function embedFields(trade) {
+    return [{
+        name: `${trade.names[0]}'s Offer:     \u200c`,
+        value: Object.entries(trade.offers[0]).filter(([_k, n]) => n).length
+            ? Object.entries(trade.offers[0]).map(
+                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}    \u200c` : false
+            ).filter(n => n).join("\n")
+            : "*[EMPTY]*",
+        inline: true
+    }, {
+        name: "│",
+        value: new Array(Math.max(Math.max(
+            Object.keys(trade.offers[0]).length,
+            Object.keys(trade.offers[1]).length
+        ), 1)).fill("│").join("\n"),
+        inline: true
+    }, {
+        name: `${trade.names[1]}'s Offer:`,
+        value: Object.entries(trade.offers[1]).filter(([_k, n]) => n).length
+            ? Object.entries(trade.offers[1]).map(
+                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
+            ).filter(n => n).join("\n")
+            : "*[EMPTY]*",
+        inline: true
+    }];
 }

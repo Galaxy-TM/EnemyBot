@@ -267,7 +267,7 @@ client.on("message", message => {
 
 
 client.login(process.env.TOKEN).then(() => {
-    client.user.setActivity(`the dev dying 😀`, { type: "WATCHING" });
+    client.user.setActivity(`the dev die 😀`, { type: "WATCHING" });
     require("express")().get("/", (_req, res) => res.send("Bot Online")).listen("80");
 }).catch(console.error);
 
