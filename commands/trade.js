@@ -68,9 +68,11 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     .setTitle(`Trade offers`)
                     .addFields({
                         name: `${trade.names[0]}'s Offer:`,
-                        value: Object.entries(trade.offers[0]).map(
-                            ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
-                        ).filter(n => n).join("\n"),
+                        value: trade.offers[0].length
+                            ? Object.entries(trade.offers[0]).map(
+                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
+                            ).filter(n => n).join("\n")
+                            : "*[EMPTY]*",
                         inline: true
                     }, {
                         name: "\u200c",
@@ -78,9 +80,11 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         inline: true
                     }, {
                         name: `${trade.names[1]}'s Offer:`,
-                        value: Object.entries(trade.offers[1]).map(
-                            ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
-                        ).filter(n => n).join("\n"),
+                        value: trade.offers[0].length
+                            ? Object.entries(trade.offers[1]).map(
+                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
+                            ).filter(n => n).join("\n")
+                            : "*[EMPTY]*",
                         inline: true
                     })
                     .setColor("#E82727")
