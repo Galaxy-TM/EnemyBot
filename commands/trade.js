@@ -69,10 +69,10 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Trade offers`)
                     .addFields({
-                        name: `${trade.names[0]}'s Offer:`,
+                        name: `${trade.names[0]}'s Offer:     \u200c`,
                         value: Object.keys(trade.offers[0]).length
                             ? Object.entries(trade.offers[0]).map(
-                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
+                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}    \u200c` : false
                             ).filter(n => n).join("\n")
                             : "*[EMPTY]*",
                         inline: true
