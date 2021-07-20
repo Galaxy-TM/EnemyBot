@@ -63,7 +63,8 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     return;
                 }
 
-                offer[item] += count;
+                if (item in offer) offer[item] += count;
+                else offer[item] = count;
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Trade offers`)
                     .addFields({
