@@ -4,7 +4,8 @@ const Discord = require("discord.js");
  * @typedef {import("../index").InvLike} InvLike
  * @typedef Trade
  * @property { [string, string] } ids
- * @property { [InvLike, InvLike] } items
+ * @property { [string, string] } names
+ * @property { [InvLike, InvLike] } offers
  * @property { [InvLike, InvLike] } invs
  * @property { Discord.TextChannel } channel
  */
@@ -44,9 +45,46 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     return;
                 }
                 const index = trade.ids.indexOf(message.author.id);
-                if (!(item in trade.invs[index])) {
+                const inv = trade.invs[index];
+                const offer = trade.offers[index];
 
+                if (!(item in inv)) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`You don't have any ${NAMES[item][1]} ${EMOJIS[item]} in your inventory.`)
+                        .setColor("#E82727")
+                    );
+                    return;
                 }
+                if (inv[item] < count) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`You don't have enough ${NAMES[item][1]} ${EMOJIS[item]} in your inventory.`)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+
+                offer[item] += count;
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`Trade offers`)
+                    .addFields({
+                        name: `${trade.names[0]}'s Offer:`,
+                        value: Object.entries(trade.offers[0]).map(
+                            ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
+                        ).filter(n => n).join("\n"),
+                        inline: true
+                    }, {
+                        name: "\u200c",
+                        value: new Array(Math.max(Object.keys(trade.offers[0]), Object.keys(trade.offers[1]))).fill("│").join("\n"),
+                        inline: true
+                    }, {
+                        name: `${trade.names[1]}'s Offer:`,
+                        value: Object.entries(trade.offers[1]).map(
+                            ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
+                        ).filter(n => n).join("\n"),
+                        inline: true
+                    })
+                    .setColor("#E82727")
+                )
             }
             break;
         }
@@ -96,7 +134,8 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 // Trade init
                 trades.push({
                     ids: [from.id, to.id],
-                    items: [{}, {}],
+                    names: [from.tag, to.user.tag],
+                    offers: [{}, {}],
                     invs: [inventories[from.id], inventories[to.id]],
                     channel: message.channel
                 });
