@@ -125,6 +125,10 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     return;
                 }
 
+                const index = trade.ids.indexOf(message.author.id);
+                const inv = trade.invs[index];
+                const offer = trade.offers[index];
+
                 if (!(item in offer)) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`You haven't offered any ${NAMES[item][1]}.`)
@@ -132,10 +136,6 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     );
                     return;
                 }
-
-                const index = trade.ids.indexOf(message.author.id);
-                const inv = trade.invs[index];
-                const offer = trade.offers[index];
 
                 offer[item] = Math.max(0, offer[item] - count);
 
