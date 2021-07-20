@@ -81,7 +81,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         value: new Array(Math.max(Math.max(
                             Object.keys(trade.offers[0]).length, 
                             Object.keys(trade.offers[1]).length
-                        ), 1)).fill("**│**").join("\n"),
+                        ), 1)).fill("**│**│").join("\n"),
                         inline: true
                     }, {
                         name: `${trade.names[1]}'s Offer:`,
