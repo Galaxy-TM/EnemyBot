@@ -218,12 +218,10 @@ const GUILDID = "852889827229564958";
 client.on("message", message => {
     if (!inventories) return;
     if (!cooldowns) return;
-    if (!ADMINID.includes(message.author.id) || message.guild.id === "866196489676390400") {
+    if (!ADMINID.includes(message.author.id) || message.guild.id !== "866196489676390400") {
         if (message.guild.id !== GUILDID) return;
         if (message.channel.id !== CHANNELID) return;
     }
-    if (message.guild.id !== GUILDID) return;
-    if (message.channel.id !== CHANNELID) return;
     if (!message.content.startsWith(prefix)) return;
     if (message.author.bot) return;
 
