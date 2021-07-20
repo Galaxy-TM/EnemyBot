@@ -55,7 +55,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     );
                     return;
                 }
-                if (inv[item] < count) {
+                if (inv[item] < (offer[item] || 0) + count) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`You don't have enough ${NAMES[item][1]} ${EMOJIS[item]} in your inventory.`)
                         .setColor("#E82727")
@@ -79,9 +79,82 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     }, {
                         name: "│",
                         value: new Array(Math.max(Math.max(
-                            Object.keys(trade.offers[0]).length, 
+                            Object.keys(trade.offers[0]).length,
                             Object.keys(trade.offers[1]).length
-                        ), 1)).fill("**│**│").join("\n"),
+                        ), 1)).fill("│").join("\n"),
+                        inline: true
+                    }, {
+                        name: `${trade.names[1]}'s Offer:`,
+                        value: Object.keys(trade.offers[1]).length
+                            ? Object.entries(trade.offers[1]).map(
+                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}` : false
+                            ).filter(n => n).join("\n")
+                            : "*[EMPTY]*",
+                        inline: true
+                    })
+                    .setColor("#E82727")
+                );
+            }
+            break;
+        }
+        case "remove":
+        case "r": {
+            const trade = trades.find(t => t.channel === message.channel && t.ids.includes(message.author.id));
+            if (trade) {
+                if (!item) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`Command syntax:`)
+                        .setDescription(`\`\`\`${prefix}trade remove <item> [count]\`\`\``)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+                if (!(item in NAMES)) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`Item \`${item}\` does not exist.`)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+                count = Number(count);
+                if (isNaN(count) || count < 0 || ((count % 1) !== 0)) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`\`count\` has to be a positive integer number.`)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+
+                if (!(item in offer)) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`You haven't offered any ${NAMES[item][1]}.`)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+
+                const index = trade.ids.indexOf(message.author.id);
+                const inv = trade.invs[index];
+                const offer = trade.offers[index];
+
+                offer[item] = Math.max(0, offer[item] - count);
+
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`Trade offers`)
+                    .addFields({
+                        name: `${trade.names[0]}'s Offer:     \u200c`,
+                        value: Object.keys(trade.offers[0]).length
+                            ? Object.entries(trade.offers[0]).map(
+                                ([item, count]) => count ? `**${count}** ${NAMES[item][count === 1 ? 0 : 1]} ${EMOJIS[item]}    \u200c` : false
+                            ).filter(n => n).join("\n")
+                            : "*[EMPTY]*",
+                        inline: true
+                    }, {
+                        name: "│",
+                        value: new Array(Math.max(Math.max(
+                            Object.keys(trade.offers[0]).length,
+                            Object.keys(trade.offers[1]).length
+                        ), 1)).fill("│").join("\n"),
                         inline: true
                     }, {
                         name: `${trade.names[1]}'s Offer:`,
