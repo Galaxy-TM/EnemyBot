@@ -5,7 +5,7 @@ const prefix = "-";
 
 /** @type { { [ name: string ]: string } } */
 const EMOJIS = require("./lib/emojis");
-const ADMINID = ["702757890460745810", "520293520418930690"];
+const ADMINID = ["702757890460745810", "520293520418930690", "719163211793825792"];
 
 // Inv
 const db = new (require("@replit/database"))();
@@ -218,7 +218,7 @@ const GUILDID = "852889827229564958";
 client.on("message", message => {
     if (!inventories) return;
     if (!cooldowns) return;
-    if (!ADMINID.includes(message.author.id) || message.guild.id !== "866196489676390400") {
+    if (!ADMINID.includes(message.author.id)) {
         if (message.guild.id !== GUILDID) return;
         if (message.channel.id !== CHANNELID) return;
     }
