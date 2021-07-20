@@ -106,7 +106,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 const inv = trade.invs[index];
                 const offer = trade.offers[index];
 
-                if (!(item in offer)) {
+                if (!offer[item]) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`You haven't offered any ${NAMES[item][1]}.`)
                         .setColor("#E82727")
