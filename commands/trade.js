@@ -74,7 +74,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         inline: true
                     }, {
                         name: "\u200c",
-                        value: new Array(Math.max(Object.keys(trade.offers[0]), Object.keys(trade.offers[1]))).fill("│").join("\n"),
+                        value: new Array(Math.max(Object.keys(trade.offers[0]).length, Object.keys(trade.offers[1]).length)).fill("│").join("\n"),
                         inline: true
                     }, {
                         name: `${trade.names[1]}'s Offer:`,
@@ -84,7 +84,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         inline: true
                     })
                     .setColor("#E82727")
-                )
+                );
             }
             break;
         }
