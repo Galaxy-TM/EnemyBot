@@ -28,7 +28,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 );
                 return;
             }
-            
+
             if (!item) {
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Command syntax:`)
@@ -139,7 +139,20 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     .setDescription(`\`\`\`${prefix}trade <@user>\n${prefix}trade add <item> [count]\n${prefix}trade remove <item> [count]\`\`\``)
                     .setColor("#E82727")
                 );
+                return;
             }
+            message.channel.send(new Discord.MessageEmbed()
+                .setTitle(`Trade offers`)
+                .addFields(...embedFields(trade))
+                .setColor("#E82727")
+            ).then(initMsg => {
+                initMsg.react("✅").then(() => {
+                    initMsg.react("❌")
+                });
+                let reacted0 = false;
+                let reacted1 = false;
+                initMsg.awaitReactions((reaction, user) => reaction.emoji.name === "✅" && (!reacted0 && user.id === trade.ids[0]) || (!reacted0 && user.id === trade.ids[0]), { max: 2, time: 60000 })
+            })
             break;
         }
         default: {

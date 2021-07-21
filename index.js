@@ -229,12 +229,12 @@ const GUILDID = "852889827229564958";
 client.on("message", message => {
     if (!inventories) return;
     if (!cooldowns) return;
+    if (message.author.bot) return;
     if (!ADMINID.includes(message.author.id)) {
         if (message.guild.id !== GUILDID) return;
         if (message.channel.id !== CHANNELID) return;
     }
     if (!message.content.startsWith(prefix)) return;
-    if (message.author.bot) return;
 
     const [commandName, ...args] = message.content.slice(prefix.length).split(/ +/g);
     for (let c in commands) {
