@@ -20,58 +20,65 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
         case "add":
         case "a": {
             const trade = trades.find(t => t.channel === message.channel && t.ids.includes(message.author.id));
-            if (trade) {
-                if (!item) {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`Command syntax:`)
-                        .setDescription(`\`\`\`${prefix}trade add <item> [count]\`\`\``)
-                        .setColor("#E82727")
-                    );
-                    return;
-                }
-                if (!(item in NAMES)) {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`Item \`${item}\` does not exist.`)
-                        .setColor("#E82727")
-                    );
-                    return;
-                }
-                count = Number(count);
-                if (isNaN(count) || count < 0 || ((count % 1) !== 0)) {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`\`count\` has to be a positive integer number.`)
-                        .setColor("#E82727")
-                    );
-                    return;
-                }
-                const index = trade.ids.indexOf(message.author.id);
-                const inv = trade.invs[index];
-                const offer = trade.offers[index];
-
-                if (!(item in inv)) {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`You don't have any ${NAMES[item][1]} ${EMOJIS[item]} in your inventory.`)
-                        .setColor("#E82727")
-                    );
-                    return;
-                }
-                if (inv[item] < (offer[item] || 0) + count) {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`You don't have enough ${NAMES[item][1]} ${EMOJIS[item]} in your inventory.`)
-                        .setColor("#E82727")
-                    );
-                    return;
-                }
-
-                if (item in offer) offer[item] += count;
-                else offer[item] = count;
-
+            if (!trade) {
                 message.channel.send(new Discord.MessageEmbed()
-                    .setTitle(`Trade offers`)
-                    .addFields(...embedFields(trade))
+                    .setTitle(`You don't have a trade right now!`)
+                    .setDescription(`Use \`${prefix}trade <@user>\` to initiate a trade!`)
                     .setColor("#E82727")
                 );
+                return;
             }
+            
+            if (!item) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`Command syntax:`)
+                    .setDescription(`\`\`\`${prefix}trade add <item> [count]\`\`\``)
+                    .setColor("#E82727")
+                );
+                return;
+            }
+            if (!(item in NAMES)) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`Item \`${item}\` does not exist.`)
+                    .setColor("#E82727")
+                );
+                return;
+            }
+            count = Number(count);
+            if (isNaN(count) || count < 0 || ((count % 1) !== 0)) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`\`count\` has to be a positive integer number.`)
+                    .setColor("#E82727")
+                );
+                return;
+            }
+            const index = trade.ids.indexOf(message.author.id);
+            const inv = trade.invs[index];
+            const offer = trade.offers[index];
+
+            if (!(item in inv)) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`You don't have any ${NAMES[item][1]} ${EMOJIS[item]} in your inventory.`)
+                    .setColor("#E82727")
+                );
+                return;
+            }
+            if (inv[item] < (offer[item] || 0) + count) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`You don't have enough ${NAMES[item][1]} ${EMOJIS[item]} in your inventory.`)
+                    .setColor("#E82727")
+                );
+                return;
+            }
+
+            if (item in offer) offer[item] += count;
+            else offer[item] = count;
+
+            message.channel.send(new Discord.MessageEmbed()
+                .setTitle(`Trade offers`)
+                .addFields(...embedFields(trade))
+                .setColor("#E82727")
+            );
             break;
         }
         case "remove":
@@ -125,11 +132,14 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
             break;
         }
         case undefined: {
-            message.channel.send(new Discord.MessageEmbed()
-                .setTitle(`Command syntax:`)
-                .setDescription(`\`\`\`${prefix}trade <@user>\n${prefix}trade add <item> [count]\n${prefix}trade remove <item> [count]\`\`\``)
-                .setColor("#E82727")
-            );
+            const trade = trades.find(t => t.channel === message.channel && t.ids.includes(message.author.id));
+            if (!trade) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`Command syntax:`)
+                    .setDescription(`\`\`\`${prefix}trade <@user>\n${prefix}trade add <item> [count]\n${prefix}trade remove <item> [count]\`\`\``)
+                    .setColor("#E82727")
+                );
+            }
             break;
         }
         default: {
