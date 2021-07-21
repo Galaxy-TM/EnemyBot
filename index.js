@@ -114,13 +114,13 @@ const commands = {
             if (cmdArg) {
                 let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => aliases.includes(cmdArg));
                 if (command && command.perms !== "ADMIN" || ADMINID.includes(message.author.id)) {
-                    console.log(command);
+                    console.log(command.aliases.join);
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
                         .setDescription(command.description)
                         .addField(
-                            `Aliases: ${command.aliases.join(", ")}`
-                            `Syntax: \`\`\`\n${command.syntax}\n\`\`\``,
+                            `Aliases: ${command.aliases.join(", ")}`,
+                            `Syntax: \`\`\`\n${command.syntax}\n\`\`\``
                         )
                         .setColor("#E82727")
                     );
