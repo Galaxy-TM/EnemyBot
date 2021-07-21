@@ -151,8 +151,8 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 let reacted1 = false;
                 const reactionCollector = initMsg.createReactionCollector((reaction, user) =>
                     (reaction.emoji.name === "✅" || reaction.emoji.name === "❌") &&
-                    (!reacted0 && user.id === trade.ids[0] && (reacted0 = true)) ||
-                    (!reacted1 && user.id === trade.ids[1] && (reacted1 = true)),
+                    (user.id === trade.ids[0] && !reacted0 || reaction.emoji.name === "❌" && (reacted0 = true)) ||
+                    (user.id === trade.ids[1] && !reacted1 || reaction.emoji.name === "❌" && (reacted1 = true)),
                     { max: 2, time: 60000 }
                 );
 
@@ -168,12 +168,28 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         return;
                     }
                     if (reacted0 && reacted1) {
-                        
+                        message.channel.send(new Discord.MessageEmbed()
+                            .setTitle(`Trade accepted!`)
+                            .setDescription(`<@!${trade.ids[0]}> ⇄ <@!${trade.ids[1]}>`)
+                            .setColor("#E82727")
+                        );
+                        Object.entries(trade.offers[0]).forEach(([item, count]) => trade.invs[0][item] -= count);
+                        Object.entries(trade.offers[1]).forEach(([item, count]) => trade.invs[1][item] -= count);
+
+                        Object.entries(trade.offers[0]).forEach(([item, count]) => (item in trade.invs[1]) ? trade.invs[1][item] += count : trade.invs[1][item] = count);
+                        Object.entries(trade.offers[1]).forEach(([item, count]) => (item in trade.invs[0]) ? trade.invs[0][item] += count : trade.invs[0][item] = count);
                     }
                     if (reacted0) {
                         message.channel.send(new Discord.MessageEmbed()
-                            .setTitle(`<@!${trade.ids[0]}> has accepted the trade!`)
-                        )
+                            .setDescription(`**<@!${trade.ids[0]}> has accepted the trade!**`)
+                            .setColor("#E82727")
+                        );
+                    }
+                    if (reacted1) {
+                        message.channel.send(new Discord.MessageEmbed()
+                            .setDescription(`**<@!${trade.ids[1]}> has accepted the trade!**`)
+                            .setColor("#E82727")
+                        );
                     }
                 });
             });
