@@ -183,7 +183,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         return;
                     }
                     initMsg.edit(new Discord.MessageEmbed(initMsg.embeds[0])
-                        .addField(`<@!${user.id}> has accepted the trade!`, "\u200c")
+                        .setFooter(`${user.tag} has accepted the trade!`, "\u200c")
                     );
                 });
             });
