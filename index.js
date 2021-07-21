@@ -118,8 +118,8 @@ const commands = {
                         .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
                         .setDescription(command.description)
                         .addField(
-                            `\`\`\`${command.syntax}\`\`\``,
                             `Aliases: ${command.aliases.join(", ")}`
+                            `Syntax: \`\`\`\n${command.syntax}\n\`\`\``,
                         )
                         .setColor("#E82727")
                     );
