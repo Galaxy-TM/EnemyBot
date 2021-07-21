@@ -157,6 +157,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 );
 
                 reactionCollector.on("collect", (reaction, user) => {
+                    console.log(reacted0, reacted1);
                     if (reaction.emoji.name === "❌") {
                         reactionCollector.stop();
                         initMsg.edit(new Discord.MessageEmbed()
@@ -165,6 +166,14 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         );
                         trades.splice(trades.indexOf(trade), 1);
                         return;
+                    }
+                    if (reacted0 && reacted1) {
+                        
+                    }
+                    if (reacted0) {
+                        message.channel.send(new Discord.MessageEmbed()
+                            .setTitle(`<@!${trade.ids[0]}> has accepted the trade!`)
+                        )
                     }
                 });
             });
