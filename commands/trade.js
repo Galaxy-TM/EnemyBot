@@ -146,13 +146,28 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 .addFields(...embedFields(trade))
                 .setColor("#E82727")
             ).then(initMsg => {
-                initMsg.react("✅").then(() => {
-                    initMsg.react("❌")
-                });
+                initMsg.react("✅").then(() => initMsg.react("❌"));
                 let reacted0 = false;
                 let reacted1 = false;
-                initMsg.awaitReactions((reaction, user) => reaction.emoji.name === "✅" && (!reacted0 && user.id === trade.ids[0]) || (!reacted0 && user.id === trade.ids[0]), { max: 2, time: 60000 })
-            })
+                const reactionCollector = initMsg.createReactionCollector((reaction, user) =>
+                    (reaction.emoji.name === "✅" || reaction.emoji.name === "❌") &&
+                    (!reacted0 && user.id === trade.ids[0] && (reacted0 = true)) ||
+                    (!reacted1 && user.id === trade.ids[1] && (reacted1 = true)),
+                    { max: 2, time: 60000 }
+                );
+
+                reactionCollector.on("collect", (reaction, user) => {
+                    if (reaction.emoji.name === "❌") {
+                        reactionCollector.stop();
+                        initMsg.edit(new Discord.MessageEmbed()
+                            .setTitle(`Trade cancelled`)
+                            .setColor("#E82727")
+                        );
+                        trades.splice(trades.indexOf(trade), 1);
+                        return;
+                    }
+                });
+            });
             break;
         }
         default: {
