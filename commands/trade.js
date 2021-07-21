@@ -160,14 +160,14 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 }
                 if (!(to.id in inventories)) {
                     message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`<@!${to.id}> doesn't have an inventory 😕`)
+                        .setTitle(`${to.tag} doesn't have an inventory 😕`)
                         .setColor("#E82727")
                     );
                     return;
                 }
                 if (trades.some(t => t.ids.includes(to.id))) {
                     message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`<@!${to.id}> already has a trade session!`)
+                        .setTitle(`${to.tag} already has a trade session!`)
                         .setColor("#E82727")
                     );
                     return;
