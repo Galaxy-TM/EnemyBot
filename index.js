@@ -112,8 +112,15 @@ const commands = {
 
         func: (message, _c, [cmdArg]) => {
             if (cmdArg) {
-                let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => false && aliases.includes(cmdArg));
-                if (command && command.perms !== "ADMIN" || ADMINID.includes(message.author.id)) {
+                let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => aliases.includes(cmdArg)) || [undefined, undefined];
+                if (!command) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`Could not find command \`${cmdArg}\``)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+                if (command.perms !== "ADMIN" || ADMINID.includes(message.author.id)) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
                         .setDescription(command.description)
@@ -121,11 +128,6 @@ const commands = {
                             `Aliases: ${command.aliases.join(", ")}`,
                             `Syntax: \`\`\`\n${command.syntax}\n\`\`\``
                         )
-                        .setColor("#E82727")
-                    );
-                } else {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`Could not find command \`${cmdArg}\``)
                         .setColor("#E82727")
                     );
                 }
