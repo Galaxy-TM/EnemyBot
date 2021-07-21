@@ -160,21 +160,17 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     if (reaction.emoji.name === "❌") {
                         reactionCollector.stop();
                         initMsg.edit(new Discord.MessageEmbed()
-                            .setTitle(`Trade cancelled`)
+                            .setTitle(`Trade cancelled.`)
                             .setColor("#E82727")
                         );
                         trades.splice(trades.indexOf(trade), 1);
                         return;
                     }
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setDescription(`**<@!${user.id}> has accepted the trade!**`)
-                        .setColor("#E82727")
-                    );
                     if (reacted0 && reacted1) {
                         const fields = offersToFields(trade);
                         fields[1].name = "⇄";
                         initMsg.edit(new Discord.MessageEmbed()
-                            .setTitle(`Trade accepted!`)
+                            .setTitle(`Trade accepted! ✅`)
                             .setDescription(`<@!${trade.ids[0]}> ⇄ <@!${trade.ids[1]}>`)
                             .addFields(fields)
                             .setColor("#E82727")
@@ -184,7 +180,11 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
 
                         Object.entries(trade.offers[0]).forEach(([item, count]) => (item in trade.invs[1]) ? trade.invs[1][item] += count : trade.invs[1][item] = count);
                         Object.entries(trade.offers[1]).forEach(([item, count]) => (item in trade.invs[0]) ? trade.invs[0][item] += count : trade.invs[0][item] = count);
+                        return;
                     }
+                    initMsg.edit(new Discord.MessageEmbed(initMsg.embeds[0])
+                        .addField(`<@!${user.id}> has accepted the trade!`, "\u200c")
+                    );
                 });
             });
             break;
