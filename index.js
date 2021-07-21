@@ -62,7 +62,7 @@ const commands = {
     search: {
         cooldown: 60 * 60 * 1000,
         aliases: ["search", "s"],
-        syntax: `${prefix}search`,
+        syntax: `${prefix}search - Find a random Cell, can be used every hour`,
         description: `Use every hour to get some ${EMOJIS.mover}`,
 
         func: require("./commands/search"),
@@ -71,7 +71,7 @@ const commands = {
     bank: {
         cooldown: 1000,
         aliases: ["bank", "b"],
-        syntax: `${prefix}bank ?<@user>`,
+        syntax: `${prefix}bank - See the cell in your inventory\n${prefix}bank <@user> - See the cells a user's inventory`,
         description: `Check on your ${EMOJIS.mover}`,
 
         func: require("./commands/bank"),
@@ -80,7 +80,7 @@ const commands = {
     crafts: {
         cooldown: 1000,
         aliases: ["crafts", "cs"],
-        syntax: `${prefix}crafts ?<@user>`,
+        syntax: `${prefix}crafts - See the crafts in your inventory\n${prefix}crafts <@user> - See the crafts a user has made`,
         description: `Check on your ${EMOJIS.arrow_shooter}`,
 
         func: require("./commands/crafts"),
@@ -89,7 +89,7 @@ const commands = {
     daily: {
         cooldown: 23 * 60 * 60 * 1000 + 40 * 60 * 1000,
         aliases: ["daily", "d"],
-        syntax: `${prefix}daily`,
+        syntax: `${prefix}daily - Open your daily crate!`,
         description: `Use everyday for 2-4 ${EMOJIS.mover}`,
 
         func: require("./commands/daily"),
@@ -98,7 +98,7 @@ const commands = {
     craft: {
         cooldown: 1000,
         aliases: ["craft", "c"],
-        syntax: `${prefix}craft ?<craft_name>`,
+        syntax: `${prefix}craft - Get a list of crafting recipes\n${prefix}craft <craft_name> - Craft a craft, where craft_name is the internal name (see ${prefix}items)`,
         description: `Craft some ${EMOJIS.arrow_shooter}`,
 
         func: require("./commands/craft"),
@@ -107,7 +107,7 @@ const commands = {
     help: {
         cooldown: 1000,
         aliases: ["help", "h"],
-        syntax: `${prefix}help ?<command>`,
+        syntax: `${prefix}help - Get a list of command\n${prefix}help <command> - Get info about the command`,
         description: `See a list of commands`,
 
         func: (message, _c, [cmdArg]) => {
@@ -154,7 +154,7 @@ const commands = {
     give: {
         cooldown: 1000,
         aliases: ["give", "gift", "g"],
-        syntax: `${prefix}give <@user> <item> [count]`,
+        syntax: `${prefix}give <@user> <item> [count] - <item> is the internal name (see ${prefix}items)`,
         description: `Give someone some items`,
 
         func: require("./commands/give"),
@@ -163,7 +163,7 @@ const commands = {
     trade: {
         cooldown: 1000,
         aliases: ["trade", "tr", "t"],
-        syntax: `${prefix}trade <@user>\n${prefix}trade add <item> [count]\n${prefix}trade remove <item> [count]`,
+        syntax: `${prefix}trade - Display current trade offers (if any)\n${prefix}trade <@user> - Initiate a trade with the user\n${prefix}trade add <item> [count] - Add items to your offer. <item> is internal name (see ${prefix}items)\n${prefix}trade remove <item> [count] - Remove items from your offer. <item> is internal name (see ${prefix}items)`,
         description: `Trade with someone`,
 
         func: require("./commands/trade"),
@@ -172,7 +172,7 @@ const commands = {
     add: {
         cooldown: 0,
         aliases: ["add"],
-        syntax: `${prefix}add <@user> <item> [count]`,
+        syntax: `${prefix}add <@user> <item> [count] - <item> is the internal name (see ${prefix}items)`,
         description: `Materialise items out of nowhere`,
 
         func: require("./commands/add"),
@@ -181,8 +181,8 @@ const commands = {
     reset: {
         cooldown: 0,
         aliases: ["reset"],
-        syntax: `${prefix}reset ?<type: cd | inv | all>`,
-        description: `Reset everyone's progress\n||Ooooh what does this red button do- 👉🔴||`,
+        syntax: `${prefix}reset ?<type: cd | inv | all> - reset.`,
+        description: `Reset everyone's progress\n|| Ooooh what does this red button do- 👉🔴 ||`,
 
         func: require("./commands/reset"),
         perms: "ADMIN"
@@ -190,7 +190,7 @@ const commands = {
     status: {
         cooldown: 0,
         aliases: ["status"],
-        syntax: `${prefix}status <type> <...status>`,
+        syntax: `${prefix}status <type> <...status> - s t a t u s`,
         description: `Set the bot's status`,
 
         func: (_m, _c, [type, ...status]) => {
@@ -201,7 +201,7 @@ const commands = {
     setInfinity: {
         cooldown: 0,
         aliases: ["setInfinity"],
-        syntax: `${prefix}setInfinity <item>`,
+        syntax: `${prefix}setInfinity <item> - <item> is internal name (see ${prefix}items)`,
         description: `Gives Infinite items to the bot`,
 
         func: require("./commands/setInfinity"),
@@ -210,7 +210,7 @@ const commands = {
     items: {
         cooldown: 0,
         aliases: ["items"],
-        syntax: `${prefix}items`,
+        syntax: `${prefix}items - Get a list of items, their internal name, and emojis.`,
         description: `Lists items`,
 
         func: require("./commands/items"),
