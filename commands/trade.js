@@ -108,7 +108,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
 
                 if (!offer[item]) {
                     message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`You haven't offered any ${NAMES[item][1]}.`)
+                        .setTitle(`You haven't offered any ${NAMES[item][1]} ${EMOJIS[item]}.`)
                         .setColor("#E82727")
                     );
                     return;
@@ -125,6 +125,11 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
             break;
         }
         case undefined: {
+            message.channel.send(new Discord.MessageEmbed()
+                .setTitle(`Command syntax:`)
+                .setDescription(`\`\`\`${prefix}trade <@user>\n${prefix}trade add <item> [count]\n${prefix}trade remove <item> [count]\`\`\``)
+                .setColor("#E82727")
+            );
             break;
         }
         default: {
