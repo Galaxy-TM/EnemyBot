@@ -11,6 +11,13 @@ module.exports = (message, _c, [item], inventories, _p, setInv) => {
         );
         return;
     }
+    if (!(item in inventories)) {
+        message.channel.send(new Discord.MessageEmbed()
+            .setDescription(`Item \`item\` does not exist.`)
+            .setColor("#E82727")
+        );
+        return;
+    }
     inventories["862698871624957982"][item] = "Infinity";
     setInv();
 
