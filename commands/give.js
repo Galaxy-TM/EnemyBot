@@ -14,7 +14,7 @@ module.exports = (message, _c, [id, item, count = 1], inventories, prefix, setIn
     if (!item) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`Command Syntax`)
-            .setDescription(`\`${prefix}give <@user> <item> [count]\``)
+            .setDescription(`\`\`\`\n${prefix}give <@user> <item> [count]\n\`\`\``)
             .setColor("#E82727")
         );
         return;
