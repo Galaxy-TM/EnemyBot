@@ -151,13 +151,12 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 let reacted1 = false;
                 const reactionCollector = initMsg.createReactionCollector((reaction, user) =>
                     (reaction.emoji.name === "✅" || reaction.emoji.name === "❌") &&
-                    (user.id === trade.ids[0] && !reacted0 || reaction.emoji.name === "❌" && (reacted0 = true)) ||
-                    (user.id === trade.ids[1] && !reacted1 || reaction.emoji.name === "❌" && (reacted1 = true)),
+                    (user.id === trade.ids[0] && (!reacted0 || reaction.emoji.name === "❌") && (reacted0 = true)) ||
+                    (user.id === trade.ids[1] && (!reacted1 || reaction.emoji.name === "❌") && (reacted1 = true)),
                     { max: 2, time: 60000 }
                 );
 
                 reactionCollector.on("collect", (reaction, user) => {
-                    console.log(reacted0, reacted1);
                     if (reaction.emoji.name === "❌") {
                         reactionCollector.stop();
                         initMsg.edit(new Discord.MessageEmbed()
