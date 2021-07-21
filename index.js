@@ -112,9 +112,8 @@ const commands = {
 
         func: (message, _c, [cmdArg]) => {
             if (cmdArg) {
-                let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => aliases.includes(cmdArg));
+                let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => false && aliases.includes(cmdArg));
                 if (command && command.perms !== "ADMIN" || ADMINID.includes(message.author.id)) {
-                    console.log(command.aliases.join);
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
                         .setDescription(command.description)
