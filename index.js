@@ -114,6 +114,7 @@ const commands = {
             if (cmdArg) {
                 let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => aliases.includes(cmdArg));
                 if (command && command.perms !== "ADMIN" || ADMINID.includes(message.author.id)) {
+                    console.log(command);
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
                         .setDescription(command.description)
