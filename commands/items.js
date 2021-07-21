@@ -8,4 +8,4 @@ module.exports = (message) => {
         .setTitle("Items:")
         .setDescription(Object.entries(NAMES).map(([item, name]) => `Internal name: ${item}; Display name: ${name}; Emoji: ${EMOJIS[item] || "[MISSING]"}`).join("\n"))
     );
-}
+};

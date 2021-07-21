@@ -204,6 +204,15 @@ const commands = {
 
         func: require("./commands/setInfinity"),
         perms: "ADMIN"
+    },
+    items: {
+        cooldown: 0,
+        aliases: ["items"],
+        syntax: `${prefix}items`,
+        description: `Lists items`,
+
+        func: require("./commands/items"),
+        perms: "ADMIN"
     }
 };
 
