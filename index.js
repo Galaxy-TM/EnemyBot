@@ -161,7 +161,7 @@ const commands = {
     trade: {
         cooldown: 1000,
         aliases: ["trade", "tr", "t"],
-        syntax: `${prefix}trade <@user>\n${prefix} a`,
+        syntax: `${prefix}trade <@user>\n${prefix}trade add <item> [count]\n${prefix}trade remove <item> [count]`,
         description: `Trade with someone`,
 
         func: require("./commands/trade"),
