@@ -76,7 +76,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
 
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle(`Trade offers`)
-                .addFields(...embedFields(trade))
+                .addFields(...offersToFields(trade))
                 .setColor("#E82727")
             );
             break;
@@ -125,7 +125,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
 
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Trade offers`)
-                    .addFields(...embedFields(trade))
+                    .addFields(...offersToFields(trade))
                     .setColor("#E82727")
                 );
             }
@@ -143,7 +143,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
             }
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle(`Trade offers`)
-                .addFields(...embedFields(trade))
+                .addFields(...offersToFields(trade))
                 .setColor("#E82727")
             ).then(initMsg => {
                 initMsg.react("✅").then(() => initMsg.react("❌"));
@@ -168,9 +168,12 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                         return;
                     }
                     if (reacted0 && reacted1) {
+                        const fields = offersToFields(trade);
+                        fields[1].name = "⇄";   
                         message.channel.send(new Discord.MessageEmbed()
                             .setTitle(`Trade accepted!`)
                             .setDescription(`<@!${trade.ids[0]}> ⇄ <@!${trade.ids[1]}>`)
+                            .addFields(fields)
                             .setColor("#E82727")
                         );
                         Object.entries(trade.offers[0]).forEach(([item, count]) => trade.invs[0][item] -= count);
@@ -254,7 +257,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
     }
 }
 /** @param {Trade} trade */
-function embedFields(trade) {
+function offersToFields(trade) {
     return [{
         name: `${trade.names[0]}'s Offer:     \u200c`,
         value: Object.entries(trade.offers[0]).filter(([_k, n]) => n).length
