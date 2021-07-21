@@ -169,6 +169,15 @@ const commands = {
         func: require("./commands/trade"),
         perms: "NORMAL"
     },
+    items: {
+        cooldown: 0,
+        aliases: ["items", "i"],
+        syntax: `${prefix}items - Get a list of items, their internal name, and emojis.`,
+        description: `Lists items`,
+
+        func: require("./commands/items"),
+        perms: "NORMAL"
+    },
     add: {
         cooldown: 0,
         aliases: ["add"],
@@ -205,15 +214,6 @@ const commands = {
         description: `Gives Infinite items to the bot`,
 
         func: require("./commands/setInfinity"),
-        perms: "ADMIN"
-    },
-    items: {
-        cooldown: 0,
-        aliases: ["items"],
-        syntax: `${prefix}items - Get a list of items, their internal name, and emojis.`,
-        description: `Lists items`,
-
-        func: require("./commands/items"),
         perms: "ADMIN"
     }
 };
