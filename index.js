@@ -92,7 +92,7 @@ const commands = {
         syntax: `${prefix}trophies - See the trophies you have collected (if any)\n${prefix}bank <@user> - See the trophies of other users`,
         description: `See your 🏆`,
 
-        func: require("./commands/bank"),
+        func: require("./commands/trophies"),
         perms: "NORMAL"
     },
     daily: {
