@@ -157,7 +157,7 @@ const commands = {
                     .setColor("#E82727")
                     .addFields(categories.map(category => ({
                         name: CATEGORYNAMES[category],
-                        value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ")
+                        value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
                     })))
                 );
                 if (ADMINID.includes(message.author.id)) {
