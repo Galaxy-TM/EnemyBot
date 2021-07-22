@@ -19,5 +19,8 @@
     },
     "bughunter_silver": {
         "bughunter": 5
+    },
+    "bughunter_golden": {
+        "bughunter_silver": 3
     }
 }

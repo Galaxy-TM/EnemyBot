@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
-const order = ["mover", "generator", "push", "slide", "rotator", "rotator_ccw", "trash", "enemy", "rickroll"];
+const order = require("../lib/trophies.json");
 
 /** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [id], inventories, prefix) => {
@@ -19,16 +19,12 @@ module.exports = (message, _c, [id], inventories, prefix) => {
             name = member.nickname || member.user.username;
             avatar = member.user.avatarURL();
             if (member.user.bot) {
-                if (member.user.id === "862698871624957982") {
-                    name = "VeryEpicEnemyBot69420";
-                } else {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`${member.nickname || member.user.username} is a bot.`)
-                        .setFooter("Bots don't have banks!")
-                        .setColor("#E82727")
-                    );
-                    return;
-                }
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`${member.nickname || member.user.username} is a bot.`)
+                    .setFooter("Bots don't have trophies!")
+                    .setColor("#E82727")
+                );
+                return;
             }
         } else {
             message.channel.send(new Discord.MessageEmbed()
@@ -41,7 +37,7 @@ module.exports = (message, _c, [id], inventories, prefix) => {
     if (id in inventories) {
         const inv = inventories[id];
         message.channel.send(new Discord.MessageEmbed()
-            .setAuthor(`${name || id}'s Bank (×${order.map(cell => inv[cell]).filter(n => n && n > 0).reduce((a, count) => a + Number(count), 0)})`, avatar) 
+            .setAuthor(`${name || id}'s Trophies (×${order.map(trophy => inv[trophy]).filter(n => n && n > 0).reduce((a, count) => a + Number(count), 0)})`, avatar)
             .setColor("#E82727")
             .setDescription(order.map(cell => {
                 if (!inv[cell]) return false;
@@ -52,7 +48,7 @@ module.exports = (message, _c, [id], inventories, prefix) => {
     } else {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`${name || id}'s Bank is empty!`)
-            .setFooter(`Use ${prefix}search to get cells!`)
+            .setFooter(`[REDACTED] to get trophies!`)
             .setColor("#E82727")
         );
     }
