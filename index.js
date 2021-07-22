@@ -59,9 +59,10 @@ function toTime(ms = 0) {
 
 const categories = ["cell", "craft", "other"];
 const CATEGORYNAMES = {
-    cell: `Cells ${EMOJIS.mover}`,
-    craft: `Crafts ${EMOJIS.arrow_shooter}`,
-    other: `Others ⚙`
+    cell: `${EMOJIS.mover} Cells`,
+    craft: `${EMOJIS.arrow_shooter} Crafts`,
+    other: `⚙ Others`,
+    admin: `🔧 Admin`
 }
 /** @type { { [cmdName: string]: Command } } */
 const commands = {
@@ -153,10 +154,10 @@ const commands = {
                 }
             } else {
                 message.channel.send(new Discord.MessageEmbed()
-                    .setTitle("Commands")
+                    .setTitle("Command List:")
                     .setColor("#E82727")
                     .addFields(categories.map(category => ({
-                        name: CATEGORYNAMES[category],
+                        name: `${CATEGORYNAMES[category]}: `,
                         value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
                     })))
                 );
@@ -164,7 +165,10 @@ const commands = {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle("🔧 Admin Commands")
                         .setColor("#E82727")
-                        .setDescription()
+                        .addField(
+                            `${CATEGORYNAMES.admin}: `,
+                            Object.entries(commands).filter(([_n, command]) => command.category === "admin").map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
+                        )
                     )
                 }
             }
@@ -202,6 +206,7 @@ const commands = {
         aliases: ["add"],
         syntax: `${prefix}add <@user> <item> [count] - <item> is the internal name (see ${prefix}items)`,
         description: `Materialise items out of nowhere`,
+        category: "admin",
 
         func: require("./commands/add"),
         perms: "ADMIN"
@@ -211,6 +216,7 @@ const commands = {
         aliases: ["reset"],
         syntax: `${prefix}reset ?<type: cd | inv | all> - reset.`,
         description: `Reset everyone's progress\n|| Ooooh what does this red button do- 👉🔴 ||`,
+        category: "admin",
 
         func: require("./commands/reset"),
         perms: "ADMIN"
@@ -220,6 +226,7 @@ const commands = {
         aliases: ["status"],
         syntax: `${prefix}status <type> <...status> - s t a t u s`,
         description: `Set the bot's status`,
+        category: "admin",
 
         func: (_m, _c, [type, ...status]) => {
             client.user.setActivity(status.join(" "), { type });
@@ -231,6 +238,7 @@ const commands = {
         aliases: ["setInfinity"],
         syntax: `${prefix}setInfinity <item> - <item> is internal name (see ${prefix}items)`,
         description: `Gives Infinite items to the bot`,
+        category: "admin",
 
         func: require("./commands/setInfinity"),
         perms: "ADMIN"
