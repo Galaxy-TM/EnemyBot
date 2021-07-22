@@ -47,7 +47,7 @@ module.exports = (message, _c, [id], inventories, prefix) => {
         );
     } else {
         message.channel.send(new Discord.MessageEmbed()
-            .setTitle(`${name || id}'s Bank is empty!`)
+            .setTitle(`${name || id}doesnt have any trophies!`)
             .setFooter(`[REDACTED] to get trophies!`)
             .setColor("#E82727")
         );
