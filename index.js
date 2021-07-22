@@ -71,7 +71,7 @@ const commands = {
     bank: {
         cooldown: 1000,
         aliases: ["bank", "b"],
-        syntax: `${prefix}bank - See the cell in your inventory\n${prefix}bank <@user> - See the cells a user's inventory`,
+        syntax: `${prefix}bank - See the cell in your inventory\n${prefix}bank <@user> - See the cells in a user's inventory`,
         description: `Check on your ${EMOJIS.mover}`,
 
         func: require("./commands/bank"),
@@ -84,6 +84,15 @@ const commands = {
         description: `Check on your ${EMOJIS.arrow_shooter}`,
 
         func: require("./commands/crafts"),
+        perms: "NORMAL"
+    },
+    trophies: {
+        cooldown: 1000,
+        aliases: ["trophies", "trp"],
+        syntax: `${prefix}trophies - See the trophies you have collected (if any)\n${prefix}bank <@user> - See the trophies of other users`,
+        description: `See your 🏆`,
+
+        func: require("./commands/bank"),
         perms: "NORMAL"
     },
     daily: {
