@@ -175,6 +175,7 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                             .addFields(fields)
                             .setColor("#E82727")
                         );
+                        trades.splice(trades.indexOf(trade), 1);
                         Object.entries(trade.offers[0]).forEach(([item, count]) => trade.invs[0][item] -= count);
                         Object.entries(trade.offers[1]).forEach(([item, count]) => trade.invs[1][item] -= count);
 
