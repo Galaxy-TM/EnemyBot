@@ -14,7 +14,7 @@ const db = new (require("@replit/database"))();
  * @typedef { { [item: string]: number } } InvLike
  * @typedef { { [id: string]: InvLike } } InvsLike
  * @typedef { (message: Discord.Message, commandName: string, args: string[], inventories: InvsLike, prefix: string, setInv: (inv?: InvsLike) => void, setCD: (cd?: InvsLike) => void) => void } CommandFunc
- * @typedef { { cooldown: number, aliases: string[], syntax: string, description: string, func: CommandFunc, perms: "NORMAL" | "ADMIN" } } Command
+ * @typedef { { cooldown: number, aliases: string[], syntax: string, description: string, category: string, func: CommandFunc, perms: "NORMAL" | "ADMIN" } } Command
  */
 /** @type {InvsLike} */
 let inventories = null;
@@ -57,6 +57,12 @@ function toTime(ms = 0) {
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
 
+const categories = ["cell", "craft", "other"];
+const CATEGORYNAMES = {
+    cell: `Cells ${EMOJIS.mover}`,
+    craft: `Crafts ${EMOJIS.arrow_shooter}`,
+    other: `Others ⚙`
+}
 /** @type { { [cmdName: string]: Command } } */
 const commands = {
     search: {
@@ -64,6 +70,7 @@ const commands = {
         aliases: ["search", "s"],
         syntax: `${prefix}search - Find a random Cell, can be used every hour`,
         description: `Use every hour to get some ${EMOJIS.mover}`,
+        category: "cell",
 
         func: require("./commands/search"),
         perms: "NORMAL"
@@ -73,6 +80,7 @@ const commands = {
         aliases: ["bank", "b"],
         syntax: `${prefix}bank - See the cell in your inventory\n${prefix}bank <@user> - See the cells in a user's inventory`,
         description: `Check on your ${EMOJIS.mover}`,
+        category: "cell",
 
         func: require("./commands/bank"),
         perms: "NORMAL"
@@ -82,6 +90,7 @@ const commands = {
         aliases: ["crafts", "cs"],
         syntax: `${prefix}crafts - See the crafts in your inventory\n${prefix}crafts <@user> - See the crafts a user has made`,
         description: `Check on your ${EMOJIS.arrow_shooter}`,
+        category: "craft",
 
         func: require("./commands/crafts"),
         perms: "NORMAL"
@@ -100,6 +109,7 @@ const commands = {
         aliases: ["daily", "d"],
         syntax: `${prefix}daily - Open your daily crate!`,
         description: `Use everyday for 2-4 ${EMOJIS.mover}`,
+        category: "cell",
 
         func: require("./commands/daily"),
         perms: "NORMAL"
@@ -109,6 +119,7 @@ const commands = {
         aliases: ["craft", "c"],
         syntax: `${prefix}craft - Get a list of crafting recipes\n${prefix}craft <craft_name> - Craft a craft, where craft_name is the internal name (see ${prefix}items)`,
         description: `Craft some ${EMOJIS.arrow_shooter}`,
+        category: "craft",
 
         func: require("./commands/craft"),
         perms: "NORMAL"
@@ -141,20 +152,19 @@ const commands = {
                     );
                 }
             } else {
-                const commandsStr = Object.entries(commands).map(([cmdName, { perms }]) => ({
-                    str: `${EMOJIS[cmdName]} ${cmdName}`,
-                    perms
-                }));
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle("Commands")
                     .setColor("#E82727")
-                    .setDescription(commandsStr.filter(({ perms }) => perms === "NORMAL").map(({ str }) => str).join("   "))
+                    .addFields(categories.map(category => ({
+                        name: CATEGORYNAMES[category],
+                        value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ")
+                    })))
                 );
                 if (ADMINID.includes(message.author.id)) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle("🔧 Admin Commands")
                         .setColor("#E82727")
-                        .setDescription(commandsStr.filter(({ perms }) => perms === "ADMIN").map(({ str }) => str).join("   "))
+                        .setDescription()
                     )
                 }
             }
