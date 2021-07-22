@@ -46,9 +46,9 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 );
                 return;
             }
-            if (item in UNTRADEABLE) {
+            if (UNTRADEABLE.includes(item)) {
                 message.channel.send(new Discord.MessageEmbed()
-                    .setTitle(`${NAMES[item][1]} cannot be traded.`)
+                    .setTitle(`${NAMES[item][1]} ${EMOJIS[item]} cannot be traded.`)
                     .setColor("#E82727")
                 );
                 return;

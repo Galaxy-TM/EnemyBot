@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
+const UNGIVEABLE = [...require("../lib/trophies.json")];
 
 /** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [id, item, count = 1], inventories, prefix, setInv) => {
@@ -22,6 +23,13 @@ module.exports = (message, _c, [id, item, count = 1], inventories, prefix, setIn
     if (!(item in NAMES)) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`Item \`${item}\` does not exist.`)
+            .setColor("#E82727")
+        );
+        return;
+    }
+    if (UNGIVEABLE.includes(item)) {
+        message.channel.send(new Discord.MessageEmbed()
+            .setTitle(`${NAMES[item][1]} ${EMOJIS[item]} cannot be given away.`)
             .setColor("#E82727")
         );
         return;
