@@ -148,13 +148,13 @@ const commands = {
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle("Commands")
                     .setColor("#E82727")
-                    .setDescription(commandsStr.filter(({ perms }) => perms === "NORMAL").map(({ str }) => str).join("\n"))
+                    .setDescription(commandsStr.filter(({ perms }) => perms === "NORMAL").map(({ str }) => str).join("   "))
                 );
                 if (ADMINID.includes(message.author.id)) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle("🔧 Admin Commands")
                         .setColor("#E82727")
-                        .setDescription(commandsStr.filter(({ perms }) => perms === "ADMIN").map(({ str }) => str).join("\n"))
+                        .setDescription(commandsStr.filter(({ perms }) => perms === "ADMIN").map(({ str }) => str).join("   "))
                     )
                 }
             }
@@ -232,17 +232,15 @@ client.once("ready", () => {
     console.log("Logged in as", client.user.tag);
 });
 
-const CHANNELID = "863672313785876500";
-const GUILDID = "852889827229564958";
+const CHANNELIDS = ["863672313785876500"];
 
 client.on("message", message => {
     if (!inventories) return;
     if (!cooldowns) return;
+
     if (message.author.bot) return;
-    if (!ADMINID.includes(message.author.id)) {
-        if (message.guild.id !== GUILDID) return;
-        if (message.channel.id !== CHANNELID) return;
-    }
+    if (!(ADMINID.includes(message.author.id) || CHANNELIDS.includes(message.channel.id) || message.guild)) return;
+
     if (!message.content.startsWith(prefix)) return;
 
     const [commandName, ...args] = message.content.slice(prefix.length).split(/ +/g);
@@ -251,13 +249,7 @@ client.on("message", message => {
         if (!command.aliases.includes(commandName)) continue;
 
         if (command.perms === "ADMIN" && !ADMINID.includes(message.author.id)) {
-            message.channel.send(new Discord.MessageEmbed()
-                .setTitle(`You don't have the permissions to do that ${EMOJIS.enemy}`)
-                .setColor("#E82727")
-            );
             return;
-        } else if (command.perms === "NORMAL") {
-
         }
 
         if (!(message.author.id in cooldowns)) cooldowns[message.author.id] = {};
