@@ -11,9 +11,9 @@ module.exports = (message, _c, [item], inventories, _p, setInv) => {
         );
         return;
     }
-    if (!(item in inventories)) {
+    if (!(item in NAMES)) {
         message.channel.send(new Discord.MessageEmbed()
-            .setDescription(`Item \`item\` does not exist.`)
+            .setDescription(`Item \`${item}\` does not exist.`)
             .setColor("#E82727")
         );
         return;
