@@ -6,6 +6,8 @@ const NAMES = require("../lib/names");
 /** @type { Object<string, Recipe> } */
 const RECIPES = require("../lib/recipes");
 
+const HIDDENCRAFTS = [...require("../lib/trophies.json")];
+
 /** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [craftName], inventories, prefix, setInv) => {
     if (!(message.author.id in inventories)) {
@@ -15,22 +17,22 @@ module.exports = (message, _c, [craftName], inventories, prefix, setInv) => {
         );
         return;
     }
+    const inv = inventories[message.author.id];
     if (!craftName) {
         message.channel.send(new Discord.MessageEmbed()
             .setTitle(`Crafting Recipes`)
             .setColor("#E82727")
-            .addFields(Object.entries(RECIPES).map(([name, recipe]) => ({
-                name: `${NAMES[name][0]} ${EMOJIS[name]}          \u200c`,
+            .addFields(Object.entries(RECIPES).map(([name, recipe]) => (!HIDDENCRAFTS.includes(name) || Object.entries(recipe).reduce((a, [item, count]) => a && (item in inv) && inv[item] >= count, true)) ? {
+                name: `${NAMES[name][0]} ${EMOJIS[name]} ${Object.entries(recipe).reduce((a, [item, count]) => a && (item in inv) && inv[item] >= count, true) ? "✅" : "❌"}          \u200c`,
                 value: Object.entries(recipe).map(([cell, count]) => `**${count}** ${EMOJIS[cell]}`).join("; "),
                 inline: true
-            })))
+            } : false).filter(n => n))
         );
         return;
     }
     if (craftName in RECIPES) {
         const RECIPE = RECIPES[craftName];
         const str = [];
-        const inv = inventories[message.author.id];
         let canCraft = true;
         for (let component in RECIPE) {
             const required = RECIPE[component];

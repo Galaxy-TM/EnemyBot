@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const NAMES = require("../lib/names");
 const EMOJIS = require("../lib/emojis");
 
-const HIDDEN = ["rickroll"];
+const HIDDEN = ["rickroll", ...require("../lib/trophies.json")];
 
 /** @type {import("../index").CommandFunc} */
 module.exports = (message) => {

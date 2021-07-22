@@ -13,5 +13,8 @@
     "enemy_vault": ["Enemy Vault", "Enemy Vaults", "an"],
     "counter": ["Counter", "Counters", "a"],
 
-    "rickroll": ["Rickroll", "Rickrolls", "a"]
+    "rickroll": ["Rickroll", "Rickrolls", "a"],
+    "bughunter": ["Bughunter Trophy", "Bughunter Trophies", "a"],
+    "bughunter_silver": ["Bugsmasher Trophy", "Bugsmasher Trophies", "a"],
+    "bughunter_golden": ["Bug Destroyer Trophy", "Bug Destroyer Trophies", "a"]
 }

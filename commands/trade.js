@@ -13,6 +13,8 @@ const Discord = require("discord.js");
 const trades = [];
 const EMOJIS = require("../lib/emojis");
 const NAMES = require("../lib/names");
+const UNTRADEABLE = [...require("../lib/trophies.json")];
+
 
 /** @type { import("../index").CommandFunc } */
 module.exports = (message, _c, [type, item, count = 1], inventories, prefix, setInv) => {
@@ -40,6 +42,13 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
             if (!(item in NAMES)) {
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Item \`${item}\` does not exist.`)
+                    .setColor("#E82727")
+                );
+                return;
+            }
+            if (item in UNTRADEABLE) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`${NAMES[item][1]} cannot be traded.`)
                     .setColor("#E82727")
                 );
                 return;
