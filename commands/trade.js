@@ -194,6 +194,14 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 const to = message.mentions.members.first();
                 const from = message.author;
 
+                if (to.user.bot) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setTitle(`You can't trade with bots 🤖`)
+                        .setColor("#E82727")
+                    );
+                    return;
+                }
+
                 if (!(from.id in inventories)) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`You don't have an inventory 😕`)
