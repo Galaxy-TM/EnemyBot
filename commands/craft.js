@@ -30,7 +30,7 @@ module.exports = (message, _c, [craftName], inventories, prefix, setInv) => {
         );
         return;
     }
-    if (craftName in RECIPES) {
+    if (craftName in RECIPES && (!HIDDENCRAFTS.includes(craftName) || Object.entries(RECIPES[craftName]).reduce((a, [item, count]) => a && (item in inv) && inv[item] >= count, true))) {
         const RECIPE = RECIPES[craftName];
         const str = [];
         let canCraft = true;
