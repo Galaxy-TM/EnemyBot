@@ -16,5 +16,8 @@
         "generator": 1,
         "push": 2,
         "trash": 1
+    },
+    "bughunter_silver": {
+        "bughunter": 5
     }
 }

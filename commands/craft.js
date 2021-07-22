@@ -23,7 +23,7 @@ module.exports = (message, _c, [craftName], inventories, prefix, setInv) => {
             .setTitle(`Crafting Recipes`)
             .setColor("#E82727")
             .addFields(Object.entries(RECIPES).map(([name, recipe]) => (!HIDDENCRAFTS.includes(name) || Object.entries(recipe).reduce((a, [item, count]) => a && (item in inv) && inv[item] >= count, true)) ? {
-                name: `${NAMES[name][0]} ${EMOJIS[name]} ${Object.entries(recipe).reduce((a, [item, count]) => a && (item in inv) && inv[item] >= count, true) ? "✅" : "❌"}          \u200c`,
+                name: `${NAMES[name][0]} ${EMOJIS[name]}  ${Object.entries(recipe).reduce((a, [item, count]) => a && (item in inv) && inv[item] >= count, true) ? "✅" : "❌"}          \u200c`,
                 value: Object.entries(recipe).map(([cell, count]) => `**${count}** ${EMOJIS[cell]}`).join("; "),
                 inline: true
             } : false).filter(n => n))
