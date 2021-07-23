@@ -57,7 +57,7 @@ module.exports = (message, _c, [craftName], inventories, prefix, setInv) => {
             .setDescription(str.join("\n"))
             .setFooter(canCraft
                 ? `React with ✅ to confirm crafting, react with ❌ to cancel crafting.`
-                : `Tip: use ${prefix}hunt to hunt every hour and ${prefix}daily to claim your daily crate`
+                : `Tip: use ${prefix}search to search for cells every hour and ${prefix}daily to claim your daily crate`
             )
         ).then(confirmMsg => {
             if (canCraft) {

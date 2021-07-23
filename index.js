@@ -257,7 +257,7 @@ client.on("message", message => {
     if (!cooldowns) return;
 
     if (message.author.bot) return;
-    if (!(ADMINID.includes(message.author.id) || CHANNELIDS.includes(message.channel.id) || message.guild)) return;
+    if (!(ADMINID.includes(message.author.id) || CHANNELIDS.includes(message.channel.id) && message.guild)) return;
 
     if (!message.content.startsWith(prefix)) return;
 
