@@ -5,7 +5,7 @@ const prefix = "-";
 
 /** @type { { [ name: string ]: string } } */
 const EMOJIS = require("./lib/emojis");
-const ADMINID = ["702757890460745810", "520293520418930690", "719163211793825792"];
+const ADMINIDS = ["702757890460745810", "520293520418930690", "719163211793825792"];
 
 // Inv
 const db = new (require("@replit/database"))();
@@ -141,7 +141,7 @@ const commands = {
                     );
                     return;
                 }
-                if (command.perms !== "ADMIN" || ADMINID.includes(message.author.id)) {
+                if (command.perms !== "ADMIN" || ADMINIDS.includes(message.author.id)) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
                         .setDescription(command.description)
@@ -161,7 +161,7 @@ const commands = {
                         value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
                     })))
                 );
-                if (ADMINID.includes(message.author.id)) {
+                if (ADMINIDS.includes(message.author.id)) {
                     message.channel.send(new Discord.MessageEmbed()
                         .setTitle("🔧 Admin Commands")
                         .setColor("#E82727")
@@ -250,14 +250,14 @@ client.once("ready", () => {
     console.log("Logged in as", client.user.tag);
 });
 
-const CHANNELIDS = ["863672313785876500"];
+const CHANNELIDS = ["863672313785876500", "854761820728197170"];
 
 client.on("message", message => {
     if (!inventories) return;
     if (!cooldowns) return;
 
     if (message.author.bot) return;
-    if (!(ADMINID.includes(message.author.id) || CHANNELIDS.includes(message.channel.id) && message.guild)) return;
+    if (!(ADMINIDS.includes(message.author.id) || CHANNELIDS.includes(message.channel.id) && message.guild)) return;
 
     if (!message.content.startsWith(prefix)) return;
 
@@ -266,7 +266,7 @@ client.on("message", message => {
         const command = commands[c];
         if (!command.aliases.includes(commandName)) continue;
 
-        if (command.perms === "ADMIN" && !ADMINID.includes(message.author.id)) {
+        if (command.perms === "ADMIN" && !ADMINIDS.includes(message.author.id)) {
             return;
         }
 
