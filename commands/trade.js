@@ -175,7 +175,6 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     { max: 2, time: 60000 }
                 );
 
-                console.log(trade.acceptM, trade.acceptRC);
                 trade.acceptM = initMsg;
                 trade.acceptRC = reactionCollector;
 
