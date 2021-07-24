@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const EMOJIS = require("../lib/emojis.json");
 const { commands, ADMINIDS } = require("../index");
 
 const categories = ["cell", "craft", "other"];
@@ -46,6 +47,8 @@ const adminEmbeds = Object.fromEntries([].concat(...Object.entries(commands).map
         .setColor("#E82727")
     ]
 ))));
+
+console.log(embeds, adminEmbeds);
 
 /** @type {import("../index").CommandFunc} */
 module.exports = (message, _c, [cmdArg]) => {
