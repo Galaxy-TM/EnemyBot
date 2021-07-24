@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const EMOJIS = require("../lib/emojis.json");
-const { commands, ADMINIDS } = require("../index");
+const { commands, ADMINIDS, prefix } = require("../index");
 
 const categories = ["cell", "craft", "other"];
 const CATEGORYNAMES = {

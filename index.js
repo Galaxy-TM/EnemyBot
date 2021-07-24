@@ -197,7 +197,7 @@ const commands = {
         perms: "ADMIN"
     }
 };
-module.exports = { commands, ADMINIDS };
+module.exports = { commands, ADMINIDS, prefix };
 
 // discord bot stuff
 client.once("ready", () => {
