@@ -1,10 +1,10 @@
 {
-    "mover": 0.24,
-    "rotator": 0.44,
-    "generator": 0.615,
-    "slide": 0.765,
-    "push": 0.885,
-    "rotator_ccw": 0.965,
+    "push": 0.25,
+    "slide": 0.45,
+    "rotator": 0.6,
+    "rotator_ccw": 0.75,
+    "mover": 0.85,
+    "generator": 0.95,
     "trash": 0.999,
     "enemy": 1
 }
