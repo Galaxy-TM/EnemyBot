@@ -237,6 +237,7 @@ client.on("message", message => {
             );
         } else {
             cd[c] = Date.now();
+            if (typeof command.func !== "function") return;
             command.func(message, commandName, args, inventories, prefix, set => {
                 if (set) inventories = set;
                 db.set("inv", inventories);
