@@ -57,13 +57,7 @@ function toTime(ms = 0) {
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
 
-const categories = ["cell", "craft", "other"];
-const CATEGORYNAMES = {
-    cell: `${EMOJIS.mover} Cells`,
-    craft: `${EMOJIS.arrow_shooter} Crafts`,
-    other: `⚙ Others`,
-    admin: `🔧 Admin`
-}
+
 /** @type { { [cmdName: string]: Command } } */
 const commands = {
     search: {
@@ -131,38 +125,7 @@ const commands = {
         syntax: `${prefix}help - Get a list of command\n${prefix}help <command> - Get info about the command`,
         description: `See a list of commands`,
 
-        func: (message, _c, [cmdArg]) => {
-            if (cmdArg) {
-                let [cmdName, command] = Object.entries(commands).find(([_n, { aliases }]) => aliases.includes(cmdArg)) || [undefined, undefined];
-                if (!command) {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`Could not find command \`${cmdArg}\``)
-                        .setColor("#E82727")
-                    );
-                    return;
-                }
-                if (command.perms !== "ADMIN" || ADMINIDS.includes(message.author.id)) {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
-                        .setDescription(command.description)
-                        .addField(
-                            `Aliases: ${command.aliases.join(", ")}`,
-                            `Syntax: \`\`\`\n${command.syntax}\n\`\`\``
-                        )
-                        .setColor("#E82727")
-                    );
-                }
-            } else {
-                message.channel.send(new Discord.MessageEmbed()
-                    .setTitle("Command List:")
-                    .setColor("#E82727")
-                    .addFields(ADMINIDS.includes(message.author.id) ? [...categories, "admin"] : categories.map(category => ({
-                        name: `${CATEGORYNAMES[category]}: `,
-                        value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
-                    })))
-                );
-            }
-        }
+        func: require("./commands/help")
     },
     give: {
         cooldown: 1000,
@@ -234,6 +197,7 @@ const commands = {
         perms: "ADMIN"
     }
 };
+module.exports = { commands, ADMINIDS };
 
 // discord bot stuff
 client.once("ready", () => {
