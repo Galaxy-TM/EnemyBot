@@ -95,7 +95,8 @@ const commands = {
         aliases: ["trophies", "trp"],
         syntax: `${prefix}trophies - See the trophies you have collected (if any)\n${prefix}trophies <@user> - See the trophies of other users`,
         description: `See your 🏆`,
-
+        category: "other",
+        
         func: require("./commands/trophies"),
         perms: "NORMAL"
     },
@@ -105,7 +106,7 @@ const commands = {
         syntax: `${prefix}daily - Open your daily crate!`,
         description: `Use everyday for 2-4 ${EMOJIS.mover}`,
         category: "cell",
-
+        
         func: require("./commands/daily"),
         perms: "NORMAL"
     },
@@ -124,12 +125,13 @@ const commands = {
         aliases: ["help", "h"],
         syntax: `${prefix}help - Get a list of command\n${prefix}help <command> - Get info about the command`,
         description: `See a list of commands`,
-
+        category: "other",
+        
         func: (message, _c, [cmdArg]) => {
             if (cmdArg) {
                 message.channel.send(new Discord.MessageEmbed((ADMINIDS.includes(message.author.id) ? adminEmbeds : embeds)[cmdArg] || new Discord.MessageEmbed()
-                    .setTitle(`Could not find command \`${cmdArg}\``)
-                    .setColor("#E82727")
+                .setTitle(`Could not find command \`${cmdArg}\``)
+                .setColor("#E82727")
                 ));
             } else {
                 message.channel.send(new Discord.MessageEmbed((ADMINIDS.includes(message.author.id) ? adminEmbed : embed)));
@@ -141,7 +143,8 @@ const commands = {
         aliases: ["give", "gift", "g"],
         syntax: `${prefix}give <@user> <item> [count] - <item> is the internal name (see ${prefix}items)`,
         description: `Give someone some items`,
-
+        category: "trade",
+        
         func: require("./commands/give"),
         perms: "NORMAL"
     },
@@ -150,7 +153,8 @@ const commands = {
         aliases: ["trade", "tr", "t"],
         syntax: `${prefix}trade - Display current trade offers (if any)\n${prefix}trade <@user> - Initiate a trade with the user\n${prefix}trade add <item> [count] - Add items to your offer. <item> is internal name (see ${prefix}items)\n${prefix}trade remove <item> [count] - Remove items from your offer. <item> is internal name (see ${prefix}items)`,
         description: `Trade with someone`,
-
+        category: "trade",
+        
         func: require("./commands/trade"),
         perms: "NORMAL"
     },
@@ -159,7 +163,8 @@ const commands = {
         aliases: ["items", "i"],
         syntax: `${prefix}items - Get a list of items, their internal name, and emojis.`,
         description: `Lists items`,
-
+        category: "other",
+        
         func: require("./commands/items"),
         perms: "NORMAL"
     },
@@ -256,10 +261,11 @@ client.on("message", message => {
         }
     }
 });
-const categories = ["cell", "craft", "other"];
+const categories = ["cell", "craft", "trade", "other"];
 const CATEGORYNAMES = {
     cell: `${EMOJIS.mover} Cells`,
-    craft: `${EMOJIS.arrow_shooter} Crafts`,
+    craft: `${EMOJIS.mover_gear} Crafts`,
+    trade: `⇄ Trading`,
     other: `⚙ Others`,
     admin: `🔧 Admin`
 };
