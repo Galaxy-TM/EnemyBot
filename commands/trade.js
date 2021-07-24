@@ -155,7 +155,9 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
             if (trade.acceptM) {
                 trade.acceptM.edit(new Discord.MessageEmbed()
                     .setTitle("Trade Message expired.")
+                    .setColor("#E82727")
                 );
+                trade.acceptM.reactions.removeAll();
                 trade.acceptRC.stop();
             }
             message.channel.send(new Discord.MessageEmbed()
@@ -212,7 +214,10 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     if (!(reacted0 && reacted1)) {
                         initMsg.edit(new Discord.MessageEmbed()
                             .setTitle("Trade Message expired.")
+                            .setColor("#E82727")
                         );
+                        initMsg.reactions.removeAll();
+
                         trade.acceptM = null;
                         trade.acceptRC = null;
                     }
