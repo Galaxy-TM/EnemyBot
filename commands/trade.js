@@ -8,6 +8,8 @@ const Discord = require("discord.js");
  * @property { [InvLike, InvLike] } offers
  * @property { [InvLike, InvLike] } invs
  * @property { Discord.TextChannel } channel
+ * @property { Discord.Message } acceptM
+ * @property { Discord.ReactionCollector } acceptRC
  */
 /** @type { Trade[] } */
 const trades = [];
@@ -150,6 +152,12 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 );
                 return;
             }
+            if (trade.acceptM) {
+                trade.acceptM.edit(new Discord.MessageEmbed()
+                    .setTitle("Trade Message expired.")
+                );
+                trade.acceptRC.stop();
+            }
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle(`Trade offers`)
                 .addFields(...offersToFields(trade))
@@ -164,6 +172,10 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     (user.id === trade.ids[1] && (!reacted1 || reaction.emoji.name === "❌") && (reacted1 = true)),
                     { max: 2, time: 60000 }
                 );
+
+                console.log(trade.acceptM, trade.acceptRC);
+                trade.acceptM = initMsg;
+                trade.acceptRC = reactionCollector;
 
                 reactionCollector.on("collect", (reaction, user) => {
                     if (reaction.emoji.name === "❌") {
@@ -195,6 +207,15 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     initMsg.edit(new Discord.MessageEmbed(initMsg.embeds[0])
                         .setFooter(`${user.tag} has accepted the trade!`)
                     );
+                });
+                reactionCollector.on("end", () => {
+                    if (!(reacted0 && reacted1)) {
+                        initMsg.edit(new Discord.MessageEmbed()
+                            .setTitle("Trade Message expired.")
+                        );
+                        trade.acceptM = null;
+                        trade.acceptRC = null;
+                    }
                 });
             });
             break;
@@ -253,7 +274,9 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     names: [from.tag, to.user.tag],
                     offers: [{}, {}],
                     invs: [inventories[from.id], inventories[to.id]],
-                    channel: message.channel
+                    channel: message.channel,
+                    acceptM: null,
+                    acceptRC: null
                 });
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Trade initiated:`)
