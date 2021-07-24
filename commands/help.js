@@ -48,8 +48,6 @@ const adminEmbeds = Object.fromEntries([].concat(...Object.entries(commands).map
     ]
 ))));
 
-console.log(embeds, adminEmbeds);
-
 /** @type {import("../index").CommandFunc} */
 module.exports = (message, _c, [cmdArg]) => {
     if (cmdArg) {
