@@ -156,21 +156,11 @@ const commands = {
                 message.channel.send(new Discord.MessageEmbed()
                     .setTitle("Command List:")
                     .setColor("#E82727")
-                    .addFields(categories.map(category => ({
+                    .addFields(ADMINIDS.includes(message.author.id) ? [...categories, "admin"] : categories.map(category => ({
                         name: `${CATEGORYNAMES[category]}: `,
                         value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
                     })))
                 );
-                if (ADMINIDS.includes(message.author.id)) {
-                    message.channel.send(new Discord.MessageEmbed()
-                        .setTitle("🔧 Admin Commands")
-                        .setColor("#E82727")
-                        .addField(
-                            `${CATEGORYNAMES.admin}: `,
-                            Object.entries(commands).filter(([_n, command]) => command.category === "admin").map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
-                        )
-                    )
-                }
             }
         }
     },
