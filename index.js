@@ -57,51 +57,7 @@ function toTime(ms = 0) {
     return `${hours} hour${hours === 1 ? "" : "s"} and ${minutes} minute${minutes === 1 ? "" : "s"}`;
 }
 
-const categories = ["cell", "craft", "other"];
-const CATEGORYNAMES = {
-    cell: `${EMOJIS.mover} Cells`,
-    craft: `${EMOJIS.arrow_shooter} Crafts`,
-    other: `⚙ Others`,
-    admin: `🔧 Admin`
-};
 
-const embed = new Discord.MessageEmbed()
-    .setTitle("Command List:")
-    .setColor("#E82727")
-    .addFields(categories.map(category => ({
-        name: `${CATEGORYNAMES[category]}: `,
-        value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
-    })));
-const adminEmbed = new Discord.MessageEmbed()
-    .setTitle("Command List:")
-    .setColor("#E82727")
-    .addFields([...categories, "admin"].map(category => ({
-        name: `${CATEGORYNAMES[category]}: `,
-        value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
-    })));
-
-const embeds = Object.fromEntries([].concat(...Object.entries(commands).filter(([_n, command]) => command.perms === "NORMAL").map(([cmdName, command]) => command.aliases.map(
-    alias => [alias, new Discord.MessageEmbed()
-        .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
-        .setDescription(command.description)
-        .addField(
-            `Aliases: ${command.aliases.join(", ")}`,
-            `Syntax: \`\`\`\n${command.syntax}\n\`\`\``
-        )
-        .setColor("#E82727")
-    ]
-))));
-const adminEmbeds = Object.fromEntries([].concat(...Object.entries(commands).map(([cmdName, command]) => command.aliases.map(
-    alias => [alias, new Discord.MessageEmbed()
-        .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
-        .setDescription(command.description)
-        .addField(
-            `Aliases: ${command.aliases.join(", ")}`,
-            `Syntax: \`\`\`\n${command.syntax}\n\`\`\``
-        )
-        .setColor("#E82727")
-    ]
-))));   
 /** @type { { [cmdName: string]: Command } } */
 const commands = {
     search: {
@@ -300,6 +256,51 @@ client.on("message", message => {
         }
     }
 });
+const categories = ["cell", "craft", "other"];
+const CATEGORYNAMES = {
+    cell: `${EMOJIS.mover} Cells`,
+    craft: `${EMOJIS.arrow_shooter} Crafts`,
+    other: `⚙ Others`,
+    admin: `🔧 Admin`
+};
+
+const embed = new Discord.MessageEmbed()
+    .setTitle("Command List:")
+    .setColor("#E82727")
+    .addFields(categories.map(category => ({
+        name: `${CATEGORYNAMES[category]}: `,
+        value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
+    })));
+const adminEmbed = new Discord.MessageEmbed()
+    .setTitle("Command List:")
+    .setColor("#E82727")
+    .addFields([...categories, "admin"].map(category => ({
+        name: `${CATEGORYNAMES[category]}: `,
+        value: Object.entries(commands).filter(([_n, command]) => command.category === category).map(([name]) => `\`${prefix}${name}\``).join(", ") || "[EMPTY]"
+    })));
+
+const embeds = Object.fromEntries([].concat(...Object.entries(commands).filter(([_n, command]) => command.perms === "NORMAL").map(([cmdName, command]) => command.aliases.map(
+    alias => [alias, new Discord.MessageEmbed()
+        .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
+        .setDescription(command.description)
+        .addField(
+            `Aliases: ${command.aliases.join(", ")}`,
+            `Syntax: \`\`\`\n${command.syntax}\n\`\`\``
+        )
+        .setColor("#E82727")
+    ]
+))));
+const adminEmbeds = Object.fromEntries([].concat(...Object.entries(commands).map(([cmdName, command]) => command.aliases.map(
+    alias => [alias, new Discord.MessageEmbed()
+        .setTitle(`Help: ${cmdName} ${EMOJIS[cmdName]}`)
+        .setDescription(command.description)
+        .addField(
+            `Aliases: ${command.aliases.join(", ")}`,
+            `Syntax: \`\`\`\n${command.syntax}\n\`\`\``
+        )
+        .setColor("#E82727")
+    ]
+))));
 
 
 client.login(process.env.TOKEN).then(() => {
