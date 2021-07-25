@@ -82,7 +82,6 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                 return;
             }
 
-            inv[item] -= count;
             if (item in offer) offer[item] += count;
             else offer[item] = count;
 
@@ -133,7 +132,6 @@ module.exports = (message, _c, [type, item, count = 1], inventories, prefix, set
                     return;
                 }
 
-                inv[item] += Math.min(offer[item], count);
                 offer[item] -= Math.max(offer[item], count);
 
                 message.channel.send(new Discord.MessageEmbed()

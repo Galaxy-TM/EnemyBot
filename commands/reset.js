@@ -13,8 +13,9 @@ module.exports = (message, _c, [type], inventories, _p, setInv, setCD) => {
     } else if (type === "inv") {
         if (message.mentions.users.size && !message.mentions.users.first().bot) {
             embed.setTitle(`Are you sure you want to reset ${message.mentions.users.first().tag}'s inventory?`);
+        } else {
+            embed.setTitle("Are you sure you want to reset inventories?");
         }
-        embed.setTitle("Are you sure you want to reset inventories?");
     } else if (type === "cd") {
         embed.setTitle("Are you sure you want to reset cooldowns?");
     }
