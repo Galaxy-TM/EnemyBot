@@ -17,6 +17,10 @@
         "push": 2,
         "trash": 1
     },
+    "nuke":{
+        "generator": 4,
+        "rotator": 1
+    }
     "bughunter_silver": {
         "bughunter": 5
     },
