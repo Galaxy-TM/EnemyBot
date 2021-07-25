@@ -17,6 +17,11 @@
         "push": 2,
         "trash": 1
     },
+    "key": {
+        "mover": 1,
+        "push": 1,
+        "rotator": 1
+    }
     "bughunter_silver": {
         "bughunter": 5
     },
