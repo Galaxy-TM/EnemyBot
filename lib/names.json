@@ -12,6 +12,7 @@
     "mover_gear": ["Mover Gear", "Mover Gears", "a"],
     "enemy_vault": ["Enemy Vault", "Enemy Vaults", "an"],
     "counter": ["Counter", "Counters", "a"],
+    "nuke": ["Nuke", "Nukes", "a"],
 
     "rickroll": ["Rickroll", "Rickrolls", "a"],
     "bughunter": ["Bughunter Trophy", "Bughunter Trophies", "a"],
