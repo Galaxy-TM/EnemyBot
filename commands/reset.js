@@ -29,23 +29,24 @@ module.exports = (message, _c, [type], inventories, _p, setInv, setCD) => {
                 if (type === "inv" && message.mentions.users.size && !message.mentions.users.first().bot) {
                     inventories[message.mentions.users.first().id] = {};
                 } else if (!type || type === "inv" || type === "all") {
-                    setInv({
-                        "862698871624957982": {
-                            mover: "Infinity",
-                            generator: "Infinity",
-                            push: "Infinity",
-                            slide: "Infinity",
-                            rotator: "Infinity",
-                            rotator_ccw: "Infinity",
-                            trash: "Infinity",
-                            enemy: "Infinity",
+                    // setInv({
+                    //     "862698871624957982": {
+                    //         mover: "Infinity",
+                    //         generator: "Infinity",
+                    //         push: "Infinity",
+                    //         slide: "Infinity",
+                    //         rotator: "Infinity",
+                    //         rotator_ccw: "Infinity",
+                    //         trash: "Infinity",
+                    //         enemy: "Infinity",
 
-                            arrow_shooter: "Infinity",
-                            mover_gear: "Infinity",
-                            enemy_vault: "Infinity",
-                            counter: "Infinity",
-                        }
-                    });
+                    //         arrow_shooter: "Infinity",
+                    //         mover_gear: "Infinity",
+                    //         enemy_vault: "Infinity",
+                    //         counter: "Infinity",
+                    //     }
+                    // });
+                    console.log("ER");
                 }
                 if (!type || type === "cd" || type === "all") {
                     setCD({});
