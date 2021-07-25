@@ -2,7 +2,7 @@ const EMOJIS = require("../lib/emojis");
 const Discord = require("discord.js");
 
 /** @type { import("../index").CommandFunc } */
-module.exports = (message, _c, [type], _i, _p, setInv, setCD) => {
+module.exports = (message, _c, [type], inventories, _p, setInv, setCD) => {
     const embed = new Discord.MessageEmbed()
         .setAuthor("⚠️ DANGER")
         .setDescription("This action is irreversible!")
@@ -11,6 +11,9 @@ module.exports = (message, _c, [type], _i, _p, setInv, setCD) => {
     if (!type || type === "all") {
         embed.setTitle("Are you sure you want to reset inventories and cooldowns?");
     } else if (type === "inv") {
+        if (message.mentions.users.size && !message.mentions.users.first().bot) {
+            embed.setTitle(`Are you sure you want to reset ${message.mentions.users.first().tag}'s inventory?`);
+        }
         embed.setTitle("Are you sure you want to reset inventories?");
     } else if (type === "cd") {
         embed.setTitle("Are you sure you want to reset cooldowns?");
@@ -23,7 +26,9 @@ module.exports = (message, _c, [type], _i, _p, setInv, setCD) => {
         ).then(collected => {
             let reaction = collected.first();
             if (reaction.emoji.name === "✅") {
-                if (!type || type === "inv" || type === "all") {
+                if (type === "inv" && message.mentions.users.size && !message.mentions.users.first().bot) {
+                    inventories[message.mentions.users.first().id] = {};
+                } else if (!type || type === "inv" || type === "all") {
                     setInv({
                         "862698871624957982": {
                             mover: "Infinity",
